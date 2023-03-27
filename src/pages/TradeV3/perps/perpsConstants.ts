@@ -12,13 +12,13 @@ import { MarketType } from '../../../context'
 
 // export const ORDERBOOK_P_ID = 'A83oDxWdJBDE5LdDXDDcZeuZZSQtV1X1YnbFRDHQjBeZ'
 
-export const DEX_ID = 'BjpU1ACJY2bFj7aVTiMJLhM7H1ePxwkfDhjyY9dW9dbo'
+export const DEX_ID = '2JyQDmR1dTWizTCxq83tUPqWvuf3NNWwpusoaPqv4zLG'
 
-export const INSTRUMENTS_ID = 'VXD2JfYWTiLuQLZA4jXN58cCxQe1XhaquNHAA1FEDWW'
+export const INSTRUMENTS_ID = 'DUppZTUGAKKfpqjCsBLuUHGm8V7Q5jU6wM22y49UEtYB'
 
-export const FEES_ID = '2o2VABUDicRrLSzb5U4VvBrnVbtnDdCMowrMg9x7RGnD'
+export const FEES_ID = '8cwLfjisP5wrbfZe2nmHSW3VoLdCYJzu3FvRqt9oMXNT'
 
-export const RISK_ID = 'GW31SEFBLtoEhBYFJi2KUdmdnBG4xapjE7ARBWB5MQT2'
+export const RISK_ID = 'GqCTcq7c5RgNxZZXQR9rF96Hk7T3RpTJwS5ExtgX9S1Z'
 
 export const ORDERBOOK_P_ID = 'A83oDxWdJBDE5LdDXDDcZeuZZSQtV1X1YnbFRDHQjBeZ'
 
@@ -52,11 +52,11 @@ export const VAULT_MINT = 'Bg2f3jstf2Co4Hkrxsn7evzvRwLbWYmuzaLUPGnjCwAA'
 // export const FEE_OUTPUT_REGISTER = '8wca9RPSqBURHo2VU2gDaz5pmnYpj2dXPkS88mVdfoTy'
 // export const RISK_MODEL_CONFIG_ACCT = '9uEGTZRoDwZa4N1asf1p1pnF4HEuUtG2BZBVY26feBDM'
 
-export const MPG_ID = '5QCkWjPPqs7HyGQzyMYwiVnnd8huhJUXbcP3ibDS37DJ'
+export const MPG_ID = '9q4HYkhAsjoxFRDAq17hNFBExqT3EeYTqNuxcE9L6Hev'
 
-export const RISK_OUTPUT_REGISTER = '99XL6eDctkDzRTTQ6bisscuaAbwAmix8dCfsR82GpVVu'
-export const FEE_OUTPUT_REGISTER = 'F7WNW18CkBTWhfmp2MoG684BbzLZMPLmDA2QTf2NdhWW'
-export const RISK_MODEL_CONFIG_ACCT = 'FtmTXPhDoXkTC7WLuDbKga7Ku5bfGDhJQ88NduqBHKvq'
+export const RISK_OUTPUT_REGISTER = '3LhYV1KtryV98x53BxT87VN279YvcQ2Tga8zjcxxig6K'
+export const FEE_OUTPUT_REGISTER = '3dqBonHeZCnLDzL2bPrG426G9p5L2Zxaq47M29vJ1wNi'
+export const RISK_MODEL_CONFIG_ACCT = 'Bcj7phVjdogznuUNq5oraqFQRByqj28NsZHEff3g1q7y'
 
 export const MPG_ACCOUNT_SIZE = 143864
 export const OUT_REGISTER_SIZE = 432
@@ -103,11 +103,11 @@ export const PERPS_COLLATERAL = [
 
 export const MPs = [
   {
-    id: 'DYnDVhsPqLyxLAmdJzwPYrQrq7TAhQLeK6YVQpYGWUoo',
-    orderbook_id: 'GJFsHHkNy6wkq2fXMUMvJcUGLK84rx23KbiQ1NycT4cU',
-    bids: 'BC4tZYfUyCpHYRnKMXa78b9meiue8Puu4JTzKUdoMjCh',
-    asks: '3heh1XTdkSLoAwoYP2vpntMc42fxH11ob44ou4TNMeGJ',
-    event_queue: 'FnWiFEwzNS4ksSpDmtdAk9aFWtUCdkJx6gjNwfJgnkVR',
+    id: 'Bbb84T89tSCDEbTkhp2tMWmod7bZaZ6g51LHgr7LWv4c',
+    orderbook_id: 'CmmpoD874B9C3Zix39UccRad16Eo86hSovLd8L1Rcgh7',
+    bids: '7YtHJXYriza9eT82QSu7rptF8bhi5hEURoM9Dri8oNdf',
+    asks: '5bRfbYtUsv5sgYTTaiEAvH7bGEKZ8MRMU2uaorCZmEBy',
+    event_queue: '22d46KWgYoXfuhpC4ZqAbpxuA3Pd6oZCgYQqD5X8ebQE',
     tick_size: 100,
     decimals: 5
   }

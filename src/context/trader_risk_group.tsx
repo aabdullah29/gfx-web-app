@@ -427,13 +427,13 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, [wallet.connected, marketProductGroup, isSpot])
 
   const testing = async () => {
-    // const res1 = await adminInitialiseMPG(connection, wallet)
-    // console.log(res1)
-    // const res2 = await adminCreateMarket(connection, wallet)
-    // console.log(res2)
-    // const res3 = await updateFeesIx(wallet, connection, {
+    //const res1 = await adminInitialiseMPG(connection, wallet)
+    //console.log(res1)
+    //const res2 = await adminCreateMarket(connection, wallet)
+    //console.log(res2)
+    //const res3 = await updateFeesIx(wallet, connection, {
     //  feeModelConfigAcct: marketProductGroup.feeModelConfigurationAcct
-    // })
+    //})
     // console.log(res3)
   }
   useEffect(() => {
@@ -665,11 +665,11 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, [traderRiskGroup, marketProductGroup])
 
   useEffect(() => {
-    if (marketProductGroup && !initTesting) {
+    if (marketProductGroup && !initTesting && wallet.connected) {
       setInitTesting(true)
       testing()
     }
-  }, [marketProductGroup])
+  }, [marketProductGroup, wallet])
 
   useEffect(() => {
     perpsWasm()

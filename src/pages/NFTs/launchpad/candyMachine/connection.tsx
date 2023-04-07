@@ -322,7 +322,8 @@ export const sendPerpsTransaction = async (
 
   if (messages && messages.startMessage) {
     perpsNotify({
-      message: messages.startMessage,
+      message: messages.startMessage.header,
+      description: messages.startMessage.description,
       action: 'open',
       key,
       styles: {}
@@ -366,7 +367,8 @@ export const sendPerpsTransaction = async (
   if (awaitConfirmation) {
     if (messages && messages.progressMessage) {
       perpsNotify({
-        message: messages.progressMessage,
+        message: messages.progressMessage.header,
+        description: messages.progressMessage.description,
         action: 'open',
         key,
         styles: {}
@@ -383,7 +385,8 @@ export const sendPerpsTransaction = async (
       console.log(errors)
       if (messages && messages.errorMessage) {
         perpsNotify({
-          message: messages.errorMessage,
+          message: messages.errorMessage.header,
+          description: messages.errorMessage.description,
           action: 'close',
           key,
           styles: {}
@@ -395,7 +398,8 @@ export const sendPerpsTransaction = async (
 
   if (messages && messages.endMessage) {
     perpsNotify({
-      message: messages.endMessage,
+      message: messages.endMessage.header,
+      description: messages.endMessage.description,
       action: 'close',
       key,
       styles: {}

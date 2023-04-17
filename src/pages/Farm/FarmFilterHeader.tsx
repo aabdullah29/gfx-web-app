@@ -7,13 +7,12 @@ import { SearchBar, Pill } from '../../components'
 import { useFarmContext, usePriceFeedFarm } from '../../context'
 import { checkMobile, moneyFormatterWithComma } from '../../utils'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { CenteredDiv } from '../../styles'
 
 const ABSTRACT = styled.div`
   .lastRefreshed {
     ${tw`flex flex-col h-[0px] justify-end items-center w-full sm:text-sm`}
     color: ${({ theme }) => theme.tabNameColor};
-    animation: openAnimation 3s ease-in-out;
+    animation: openAnimation 4s ease-in-out;
   }
 
   @keyframes openAnimation {
@@ -21,10 +20,10 @@ const ABSTRACT = styled.div`
       height: 0px;
     }
     30% {
-      height: 64px;
+      height: 65px;
     }
     50% {
-      height: 64px;
+      height: 65px;
     }
     100% {
       height: 0px;
@@ -58,6 +57,21 @@ const ABSTRACT = styled.div`
   }
   .toggle {
     ${tw`ml-4`}
+  }
+
+  .stats-container {
+    ${tw`flex w-full items-center justify-between sm:mb-5 mb-[20px] mt-10`}
+
+    @media(max-width: 500px) {
+      width: 200vw;
+      overflow-y: hidden;
+      overflow-x: auto;
+      flex: none;
+      color: #fff;
+      z-index: 10;
+      opacity: 1;
+      position: absolute;
+    }
   }
 `
 const WRAPPER = styled.div`
@@ -149,20 +163,6 @@ const MobileWrapper = styled.div`
   width: 92vw;
 `
 
-//TEMP_DEP_DISABLE
-const TEMP_BANNER = styled.h2`
-  margin: 28px 0 24px;
-  color: ${({ theme }) => theme.text1};
-  text-align: center;
-  font-weight: 600;
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    background-color: ${({ theme }) => theme.bg1};
-    margin: 1rem;
-    border-radius: 10px;
-  `}
-`
-
 const poolTypes = [{ name: 'All pools' }, { name: 'SSL' }, { name: 'Staking' }]
 
 export const FarmFilter: FC = () => {
@@ -197,8 +197,8 @@ export const FarmFilter: FC = () => {
   }, [refreshClass])
 
   useEffect(() => {
-    if (lastRefreshedClass !== ' ' && !firstPageLoad) {
-      setTimeout(() => setLastRefreshedClass(' '), 3000)
+    if (lastRefreshedClass !== '' && !firstPageLoad) {
+      setTimeout(() => setLastRefreshedClass(''), 4000)
     }
   }, [lastRefreshedClass])
 
@@ -207,10 +207,6 @@ export const FarmFilter: FC = () => {
       <ABSTRACT>
         <LastRefreshedAnimation lastRefreshedClass={lastRefreshedClass} />
         <GeneralStatsBarMobile />
-        {/* TEMP_DEP_DISABLE */}
-        <CenteredDiv>
-          <TEMP_BANNER>⚠️ SSL v2 Pools Will Relaunch to the Public Soon</TEMP_BANNER>
-        </CenteredDiv>
         <STYLED_FARM_HEADER>
           <ButtonContainer $poolIndex={poolIndex}>
             <div className="slider-animation"></div>
@@ -237,10 +233,6 @@ export const FarmFilter: FC = () => {
   return (
     <ABSTRACT>
       <LastRefreshedAnimation lastRefreshedClass={lastRefreshedClass} />
-      {/* TEMP_DEP_DISABLE */}
-      <CenteredDiv>
-        <TEMP_BANNER>⚠️ SSL v2 Pools Will Relaunch to the Public Soon</TEMP_BANNER>
-      </CenteredDiv>
       <WRAPPER>
         <div
           tw="flex w-full items-center justify-between 

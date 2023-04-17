@@ -271,7 +271,6 @@ export const ExpandedContentMobile: FC<{
             <STAKE_UNSTAKE>
               <OPERATION_BTN
                 className={process === 'Stake' ? 'selected' : ''}
-                // TEMP_DEP_DISABLE
                 onClick={() => (isSSL ? null : setProcess('Stake'))}
               >
                 Deposit
@@ -299,8 +298,6 @@ export const ExpandedContentMobile: FC<{
                     ? setStakeAmt(parseFloat(e.target.value))
                     : setUnstakeAmt(parseFloat(e.target.value))
                 }
-                //TEMP_DEP_DISABLE
-                disabled={isSSL}
               />
               {!isSSL ? (
                 <div className="textMain">

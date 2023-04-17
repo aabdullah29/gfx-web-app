@@ -51,9 +51,9 @@ const ExpandRowView: FC<{ farm: IFarmData; index: number }> = ({ farm, index }) 
         onClick={() => setIsOpen((prev) => !prev)}
       >
         {checkMobile() ? (
-          <ColumnMobile farm={farm} isOpen={isOpen} index={index} />
+          <ColumnMobile setIsOpen={setIsOpen} farm={farm} isOpen={isOpen} index={index} />
         ) : (
-          <ColumnWeb farm={farm} isOpen={isOpen} index={index} />
+          <ColumnWeb setIsOpen={setIsOpen} farm={farm} isOpen={isOpen} index={index} />
         )}
       </TABLE_ROW>
       {isOpen && (
@@ -368,7 +368,7 @@ const ExpandedComponent: FC<{ farm: IFarmData; setIsOpen: any }> = ({ farm, setI
         onClickStake={onClickStake}
         onClickUnstake={onClickUnstake}
         onClickWithdraw={onClickWithdraw}
-        // TEMP_DEP_DISABLE onClickDeposit={onClickDeposit}
+        onClickDeposit={onClickDeposit}
         notEnoughFunds={notEnoughFunds}
         zeroFunds={zeroFunds}
         depositBtnClass={depositBtnClass}
@@ -409,7 +409,7 @@ const ExpandedComponent: FC<{ farm: IFarmData; setIsOpen: any }> = ({ farm, setI
               <div className="rightInner" onClick={preventClose}>
                 <div>
                   <INPUT_CONTAINER>
-                    {/*TEMP_DEP_DISABLE <STYLED_INPUT
+                    <STYLED_INPUT
                       placeholder={`0.00 ${name}`}
                       type="number"
                       ref={depositRef}
@@ -417,16 +417,6 @@ const ExpandedComponent: FC<{ farm: IFarmData; setIsOpen: any }> = ({ farm, setI
                       onFocus={() => !zeroFunds && setDepositClass(' active')}
                       value={stakeAmt}
                       onChange={(e) => setStakeAmt(parseFloat(e.target.value))}
-                    /> */}
-                    <STYLED_INPUT
-                      type="number"
-                      ref={depositRef}
-                      placeholder={`0.00 ${name}`}
-                      onBlur={() => setDepositClass('')}
-                      onFocus={() => !zeroFunds && setDepositClass(' active')}
-                      value={!isSSL ? stakeAmt : null}
-                      onChange={(e) => (!isSSL ? setStakeAmt(parseFloat(e.target.value)) : null)}
-                      disabled={isSSL}
                     />
                     <div className="halfMaxText">
                       <div onClick={() => onClickHalf('stake')}>HALF</div>{' '}
@@ -435,7 +425,7 @@ const ExpandedComponent: FC<{ farm: IFarmData; setIsOpen: any }> = ({ farm, setI
                       </div>
                     </div>
                   </INPUT_CONTAINER>
-                  {/* TEMP_DEP_DISABLE <OPERATIONS_BTN
+                  <OPERATIONS_BTN
                     className={depositBtnClass}
                     loading={isStakeLoading}
                     disabled={notEnoughFunds || isStakeLoading || zeroFunds}
@@ -448,14 +438,6 @@ const ExpandedComponent: FC<{ farm: IFarmData; setIsOpen: any }> = ({ farm, setI
                       : isSSL
                       ? 'Deposit'
                       : 'Stake'}
-                  </OPERATIONS_BTN> */}
-                  <OPERATIONS_BTN
-                    className={depositBtnClass}
-                    loading={isStakeLoading}
-                    disabled={isSSL}
-                    onClick={() => (isSSL ? onClickDeposit() : onClickStake())}
-                  >
-                    {zeroFunds ? `Insufficient ${name}` : notEnoughFunds ? 'Not enough funds' : 'Stake'}
                   </OPERATIONS_BTN>
                 </div>
 

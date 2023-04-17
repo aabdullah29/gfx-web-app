@@ -19,15 +19,15 @@ interface Column {
   setSortColumn: React.Dispatch<React.SetStateAction<string>>
 }
 
-// TEMP_DEP_DISABLE const DEPOSIT_BTN = styled.button`
-//   ${tw`h-[34px] w-[130px] -mt-3 text-white rounded-3xl border-none font-semibold`}
-//   font-size: 15px;
-//   background: #5855ff;
-//   @media (max-width: 500px) {
-//     ${tw`h-7 w-[90px] -mt-0.5`}
-//     margin-left: -5.5rem;
-//   }
-// `
+const DEPOSIT_BTN = styled.button`
+  ${tw`h-[34px] w-[130px] -mt-3 text-white rounded-3xl border-none font-semibold`}
+  font-size: 15px;
+  background: #5855ff;
+  @media (max-width: 500px) {
+    ${tw`h-7 w-[90px] -mt-0.5`}
+    margin-left: -5.5rem;
+  }
+`
 export const STYLED_TITLE = styled.div`
   ${tw`flex flex-row items-center justify-center`}
   .textTitle {
@@ -200,7 +200,7 @@ const displayApr = (data: ConditionalData<number>): ReactElement<any, any> =>
     .with(Pattern.number, (value) => <text>{nFormatter(value) + '%'}</text>)
     .exhaustive()
 
-// TEMP_DEP_DISABLE const DepositButton = () => <DEPOSIT_BTN>Deposit</DEPOSIT_BTN>
+const DepositButton = () => <DEPOSIT_BTN>Deposit</DEPOSIT_BTN>
 
 const DISPLAY_VAR = styled.div`
   ${tw`flex items-center justify-center`}
@@ -220,11 +220,16 @@ const DisplayVariable = ({ data, isOpen }: any) => {
     </DISPLAY_VAR>
   )
 }
-export const ColumnWeb: FC<{ farm: IFarmData; isOpen: boolean; index: number }> = ({ farm, isOpen, index }) => {
+export const ColumnWeb: FC<{ farm: IFarmData; isOpen: boolean; index: number; setIsOpen: any }> = ({
+  farm,
+  isOpen,
+  index,
+  setIsOpen
+}) => {
   const { name, earned, currentlyStaked, apr, volume, liquidity } = farm
   const { wallet } = useWallet()
   const showConnect = index === 0
-  // TEMP_DEP_DISABLE const toggle = () => setIsOpen((prev) => !prev)
+  const toggle = () => setIsOpen((prev) => !prev)
   const { mode } = useDarkMode()
 
   const preventClose = (event) => {
@@ -253,15 +258,10 @@ export const ColumnWeb: FC<{ farm: IFarmData; isOpen: boolean; index: number }> 
         </td>
       ) : (
         <td className="balanceColumn">
-          {/* TEMP_DEP_DISABLE {currentlyStaked === 0 ? (
+          {currentlyStaked === 0 ? (
             <DEPOSIT_BTN onClick={toggle}>Deposit</DEPOSIT_BTN>
           ) : currentlyStaked !== undefined ? (
             currentlyStaked?.toFixed(DISPLAY_DECIMAL)
-          ) : (
-            <Loader />
-          )} */}
-          {currentlyStaked !== undefined ? (
-            <DisplayVariable data={currentlyStaked?.toFixed(DISPLAY_DECIMAL)} isOpen={isOpen} />
           ) : (
             <Loader />
           )}
@@ -347,9 +347,12 @@ export const ColumnHeadersMobile: FC<Column> = ({ sortColumn, setSortColumn }) =
     </th>
   </>
 )
-export const ColumnMobile: FC<{ farm: IFarmData; isOpen: boolean; index: number }> = ({ farm, isOpen }) => {
-  // TEMP_DEP_DISABLE const { name, apr, currentlyStaked } = farm
-  const { name, apr } = farm
+export const ColumnMobile: FC<{ farm: IFarmData; setIsOpen: any; isOpen: boolean; index: number }> = ({
+  farm,
+  setIsOpen,
+  isOpen
+}) => {
+  const { name, apr, currentlyStaked } = farm
   const { mode } = useDarkMode()
 
   return (
@@ -361,8 +364,8 @@ export const ColumnMobile: FC<{ farm: IFarmData; isOpen: boolean; index: number 
         <div className="columnText">{name}</div>
       </td>
       <td className="tableData">{displayApr(apr)}</td>
-      <ICON_WRAPPER_TD>
-        {/* TEMP_DEP_DISABLE {currentlyStaked === 0 && <DepositButton />} */}
+      <ICON_WRAPPER_TD onClick={() => setIsOpen((prev) => !prev)}>
+        {currentlyStaked === 0 && <DepositButton />}
         <img className={isOpen ? 'invertArrow' : ''} src={`/img/assets/arrow-down-${mode}.svg`} alt="arrow" />
       </ICON_WRAPPER_TD>
     </>

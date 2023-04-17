@@ -44,11 +44,12 @@ export interface IFarmData {
 }
 
 const WRAPPER = styled.div<{ $navCollapsed; $lastRefreshedClass }>`
-  margin-top: 5px; // ${({ $lastRefreshedClass }) => (!$lastRefreshedClass ? '45px' : '0px')}
-  // window height - banner height - nav height
-  height: calc(100vh - 216px - ${({ $navCollapsed }) => (!$navCollapsed ? '80px' : '0px')});
-
-  transition: 0.5s ease;
+  margin-top: 5px;
+  height: calc(
+    100vh - ${({ $lastRefreshedClass }) => ($lastRefreshedClass ? '60px' : '0px')} - 184px -
+      ${({ $navCollapsed }) => (!$navCollapsed ? '80px' : '0px')}
+  );
+  transition: 2s ease;
   overflow-y: auto;
   overflow-x: hidden;
   ${({ theme }) => theme.customScrollBar('0px')}
@@ -352,7 +353,7 @@ const CustomTableList: FC = () => {
   return (
     <WRAPPER
       $navCollapsed={isCollapsed}
-      $lastRefreshedClass={lastRefreshedClass === 'hide' || lastRefreshedClass === undefined}
+      $lastRefreshedClass={lastRefreshedClass === 'lastRefreshed' || lastRefreshedClass === undefined}
     >
       <table ref={tableRef}>
         <thead className="tableHeader">

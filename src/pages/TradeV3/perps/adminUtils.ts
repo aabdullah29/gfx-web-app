@@ -380,7 +380,7 @@ export const adminCreateMP = async (
     orderbook: new PublicKey(orderbookId)
   }
   const paramObj = {
-    name: Buffer.from('SOL-PERP'),
+    name: Buffer.from('BTC-PERP'),
     tickSize: new Fractional({
       m: new anchor.BN(100),
       exp: new anchor.BN(4)

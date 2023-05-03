@@ -39,9 +39,8 @@ export const FIND_FEES_DISCRIMINANT = 0
 export const FIND_FEES_DISCRIMINANT_LEN = 1
 export const MINT_DECIMALS = 6
 
-//export const VAULT_MINT = 'Bg2f3jstf2Co4Hkrxsn7evzvRwLbWYmuzaLUPGnjCwAA'
-export const VAULT_MINT = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
-export const FEE_COLLECTOR = '6YxEQCvytma1a5w9FdeLtUE8gcsRheJsfcLeiBkkjBZ8'
+export const VAULT_MINT = 'Bg2f3jstf2Co4Hkrxsn7evzvRwLbWYmuzaLUPGnjCwAA'
+//export const VAULT_MINT = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
 
 //export const MPG_ID = '7EUw8KH3KHoNNtMrKGswab3gWwM5tBqBbHKZ8eUiSQWP'
 //export const MPG_ID = '33dgY7mZmMybc5CKEmnPk9G5T2Njr1oBJTeiG9aVfoRB'
@@ -54,11 +53,11 @@ export const FEE_COLLECTOR = '6YxEQCvytma1a5w9FdeLtUE8gcsRheJsfcLeiBkkjBZ8'
 // export const FEE_OUTPUT_REGISTER = '8wca9RPSqBURHo2VU2gDaz5pmnYpj2dXPkS88mVdfoTy'
 // export const RISK_MODEL_CONFIG_ACCT = '9uEGTZRoDwZa4N1asf1p1pnF4HEuUtG2BZBVY26feBDM'
 
-export const MPG_ID = 'E9xDgYChJ6QP5xGRwoU6FtjWDXsnmoYu3DWECUU2fXAp'
+export const MPG_ID = 'FCx5JXodE6MFZkEWUMGxEmZP9az8XS8xtrNpdJxGD3aB'
 
-export const RISK_OUTPUT_REGISTER = 'Dkf3R6Q1LDLdxBrn6hvpafuX9xUcRnuYDjX75SYVxmmc'
-export const FEE_OUTPUT_REGISTER = 'HaGFeaU28JkhBR1hJkwtqr5NuraPCiy6AwADVqnMgM2p'
-export const RISK_MODEL_CONFIG_ACCT = 'GgbsFnvJJYvrEMde6vFkj2txxpEkPmFyo3iHVFPjsPDc'
+export const RISK_OUTPUT_REGISTER = '5KU11niQybasJk7JWUxE18LjFyedStWzCSKmE1nwezi5'
+export const FEE_OUTPUT_REGISTER = 'BafUT5S87oBimTsK17xxu9z8hLFeomgxrUmFVjuBNgAT'
+export const RISK_MODEL_CONFIG_ACCT = '8U914LZJn2Rf5F6izJma3HKv12FFTsidWWV2U76hi2Kk'
 
 export const MPG_ACCOUNT_SIZE = 143864
 export const OUT_REGISTER_SIZE = 432
@@ -105,11 +104,20 @@ export const PERPS_COLLATERAL = [
 
 export const MPs = [
   {
-    id: 'ExyWP65F2zsALQkC2wSQKfR7vrXyPWAG4SLWExVzgbaW',
-    orderbook_id: 'Ggw9mU8vfP3NucANaPJBZSZMRSiMPrsvFmxj5wM3qvn3',
-    bids: 'DmB2CBjeLAh6awvWvySuygSom1JHdT95ZVEQmZF4TBXD',
-    asks: 'FPTSdA4vPQRz4KyjKi5YYdNNq9EbKDSgKMNyadrbVhG8',
-    event_queue: '2Kv94KZTX8yePkdNZT1zXpzDaTpLYLpeiv7Gp8vLA6kL',
+    id: '4W6QbnfkqnWmpNNqNStnjs2NTfjeMShwWuNivwPBfwZB',
+    orderbook_id: '4mPuQcQtZvGk1aNwY4BywmPM6dYtXhqoxWSjag5pyXx9',
+    bids: '5fecvu5nPPsZyFS1RfKh4EatrLFEnfcQNKhec5PqFiZC',
+    asks: '5wCKUqcxoc3c3UZEHegVYkSqhJwY28H5UxmhsEVxZsSx',
+    event_queue: 'BvrhZiDU8DvtQKFxrgWV34UPCcNGQrHfr77WW2vycTS5',
+    tick_size: 100,
+    decimals: 5
+  },
+  {
+    id: '7vvo8P7kmsLrhjjLiF6are9Hjot4tp3BonZgvavEJtN3',
+    orderbook_id: 'A7xs7UNodcbts5DrEqYymFEZZatdqwANxyReS42kAWYn',
+    bids: 'H2u5Aj6gqEnk7LL6jJrv56CPz5dG1Gm3mVqbgiBGkGC4',
+    asks: '3jT2L3B4SrjR1dBNgDL8N5Fy2XLZR1wJyt52x8YM66hu',
+    event_queue: 'G4vC9X2VMh2ZLFHsgVMNMpT6FYvARfZ8TDd5SECDM4wg',
     tick_size: 100,
     decimals: 5
   }

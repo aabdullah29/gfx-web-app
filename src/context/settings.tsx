@@ -62,6 +62,10 @@ export function useConnectionConfig(): ISettingsConfig {
 
 export const SettingsProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [slippage, setSlippage] = useState<number>(DEFAULT_SLIPPAGE)
+  const devnetConnection = new Connection(
+    'https://omniscient-frequent-wish.solana-devnet.quiknode.pro/8b6a255ef55a6dbe95332ebe4f6d1545eae4d128/',
+    'processed'
+  )
 
   const existingUserCache: IRPC_CACHE = JSON.parse(window.localStorage.getItem('gfx-user-cache'))
 
@@ -84,6 +88,7 @@ export const SettingsProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   }, [endpointName])
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const perpsConnection = useMemo(() => {
     // sets rpc info to cache
     window.localStorage.setItem(
@@ -142,7 +147,7 @@ export const SettingsProvider: FC<{ children: ReactNode }> = ({ children }) => {
         setEndpointName,
         setSlippage: (val: number) => setSlippage(val),
         slippage: slippage,
-        perpsConnection
+        perpsConnection: devnetConnection
       }}
     >
       {children}

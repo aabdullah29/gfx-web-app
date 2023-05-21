@@ -3,8 +3,15 @@
     "pair": "SOL/USDC",
     "type": "perps",
     "coinGecko": "solana",
-    "marketAddress": "ExyWP65F2zsALQkC2wSQKfR7vrXyPWAG4SLWExVzgbaW",
+    "marketAddress": "9Coo76ES9a9rL8s8gKYck2qjR1pWphAK9q3gLNgH8MLB",
     "display": "SOL-PERP"
+  },
+  {
+    "pair": "BTC/USDC",
+    "type": "perps",
+    "coinGecko": "bitcoin",
+    "marketAddress": "BZUbnAM94vsWNrYkothp4RCgr6CPQbL3dBcZigFLRjdD",
+    "display": "BTC-PERP"
   },
   {
     "pair": "SOL/USDC",

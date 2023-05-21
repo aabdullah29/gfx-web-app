@@ -64,7 +64,7 @@ export const getDerivativeKey = (args): anchor.web3.PublicKey => {
 }
 
 export const getPythOracleAndClock = (connection: Connection): [anchor.web3.PublicKey, anchor.web3.PublicKey] => {
-  return [new PublicKey(PYTH_MAINNET), new PublicKey('SysvarC1ock11111111111111111111111111111111')]
+  return [new PublicKey(PYTH_DEVNET), new PublicKey('SysvarC1ock11111111111111111111111111111111')]
   if (connection.rpcEndpoint.includes('devnet')) {
     return [new PublicKey(PYTH_DEVNET), new PublicKey('SysvarC1ock11111111111111111111111111111111')]
   } else {
@@ -579,4 +579,12 @@ export const getProfitAmount = (side: OrderSide, price: string | number, percent
   const pr = Number(price)
   const profitAmount = pr * percentage
   return side === 'buy' ? pr + profitAmount : pr - profitAmount
+}
+
+export const findProduct = (id: string, activeproducts: IActiveProduct[]): IActiveProduct | null => {
+  let selectedProduct = null
+  activeproducts.map((item) => {
+    if (item.id === id) selectedProduct = item
+  })
+  return selectedProduct
 }

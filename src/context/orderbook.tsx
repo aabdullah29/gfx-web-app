@@ -136,8 +136,10 @@ export const OrderBookProvider: FC<{ children: ReactNode }> = ({ children }) => 
   const fetchPerpsOrderBook = async () => {
     const res = await httpClient('api-services').post(`${GET_ORDERBOOK}`, {
       API_KEY: 'zxMTJr3MHk7GbFUCmcFyFV4WjiDAufDp',
-      pairName: 'SOL-PERP'
+      pairName: activeProduct.pairName,
+      devnet: true
     })
+    //console.log('activeProduct.pairName: ', activeProduct.pairName)
     const orderbookBids = res.data?.bids.map((item) => [item.price, item.size])
     const orderbookAsks = res.data?.asks.map((item) => [item.price, item.size])
     setOrderBook((prevState) => ({ ...prevState, asks: orderbookAsks, bids: orderbookBids }))
@@ -147,7 +149,8 @@ export const OrderBookProvider: FC<{ children: ReactNode }> = ({ children }) => 
   const fetchPerpsOpenOrders = async () => {
     const res = await httpClient('api-services').post(`${GET_OPEN_ORDERS}`, {
       API_KEY: 'zxMTJr3MHk7GbFUCmcFyFV4WjiDAufDp',
-      pairName: 'SOL-PERP'
+      pairName: activeProduct.pairName,
+      devnet: true
     })
 
     const perpsOrders = []

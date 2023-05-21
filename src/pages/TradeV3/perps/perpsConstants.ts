@@ -1,6 +1,7 @@
 import { Fractional } from '../perps/dexterity/types'
 import * as anchor from '@project-serum/anchor'
 import { MarketType } from '../../../context'
+import { IActiveProduct } from '../../../context/trader_risk_group'
 
 // export const DEX_ID = 'AEWt3M4zHBPXGieh6Y1PXAFnEZpz1pF1EUuUWyXtdkfd'
 
@@ -39,7 +40,7 @@ export const FIND_FEES_DISCRIMINANT = 0
 export const FIND_FEES_DISCRIMINANT_LEN = 1
 export const MINT_DECIMALS = 6
 
-export const VAULT_MINT = 'Bg2f3jstf2Co4Hkrxsn7evzvRwLbWYmuzaLUPGnjCwAA'
+export const VAULT_MINT = '3Q6dz8cLd4BW1kyuGyUaS7qhTtFP7tGS55Y7fybCUfNy'
 //export const VAULT_MINT = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
 
 //export const MPG_ID = '7EUw8KH3KHoNNtMrKGswab3gWwM5tBqBbHKZ8eUiSQWP'
@@ -53,24 +54,24 @@ export const VAULT_MINT = 'Bg2f3jstf2Co4Hkrxsn7evzvRwLbWYmuzaLUPGnjCwAA'
 // export const FEE_OUTPUT_REGISTER = '8wca9RPSqBURHo2VU2gDaz5pmnYpj2dXPkS88mVdfoTy'
 // export const RISK_MODEL_CONFIG_ACCT = '9uEGTZRoDwZa4N1asf1p1pnF4HEuUtG2BZBVY26feBDM'
 
-export const MPG_ID = 'FCx5JXodE6MFZkEWUMGxEmZP9az8XS8xtrNpdJxGD3aB'
+export const MPG_ID = '7UnMVLrax9VoAxmGS9eCENiR64Rbs94geDasGyEtUz4Y'
 
-export const RISK_OUTPUT_REGISTER = '5KU11niQybasJk7JWUxE18LjFyedStWzCSKmE1nwezi5'
-export const FEE_OUTPUT_REGISTER = 'BafUT5S87oBimTsK17xxu9z8hLFeomgxrUmFVjuBNgAT'
-export const RISK_MODEL_CONFIG_ACCT = '8U914LZJn2Rf5F6izJma3HKv12FFTsidWWV2U76hi2Kk'
+export const RISK_OUTPUT_REGISTER = '7dw8ZyCWPofnviqhj2pVy17QSmNpYPT1HjKcrwnLReSE'
+export const FEE_OUTPUT_REGISTER = '7nC3WLNzjEkyrhqikKc7DprfwXZ6HnporvuKSg7j9SGP'
+export const RISK_MODEL_CONFIG_ACCT = 'C3HkzteagntNhSqUUtQaejRr6fmk744DTYUUQBMCjbjm'
 
 export const MPG_ACCOUNT_SIZE = 143864
 export const OUT_REGISTER_SIZE = 432
 
 export const PYTH_MAINNET = 'H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG'
 
-export const PYTH_DEVNET = 'J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix'
+export const PYTH_DEVNET = 'HovQMDrbAgAYPCmHVSrezcSmkMtXSSUsLDFANExrZh2J'
 
 export const PERPS_COLLATERAL = [
   {
     token: 'USDC',
     type: 'perps' as MarketType,
-    marketAddress: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+    marketAddress: '3Q6dz8cLd4BW1kyuGyUaS7qhTtFP7tGS55Y7fybCUfNy',
     pythProduct: 'Crypto.USDT/USD'
   }
   // {
@@ -102,24 +103,26 @@ export const PERPS_COLLATERAL = [
 //  }
 //]
 
-export const MPs = [
+export const MPs: IActiveProduct[] = [
   {
-    id: '4W6QbnfkqnWmpNNqNStnjs2NTfjeMShwWuNivwPBfwZB',
-    orderbook_id: '4mPuQcQtZvGk1aNwY4BywmPM6dYtXhqoxWSjag5pyXx9',
-    bids: '5fecvu5nPPsZyFS1RfKh4EatrLFEnfcQNKhec5PqFiZC',
-    asks: '5wCKUqcxoc3c3UZEHegVYkSqhJwY28H5UxmhsEVxZsSx',
-    event_queue: 'BvrhZiDU8DvtQKFxrgWV34UPCcNGQrHfr77WW2vycTS5',
+    id: 'AG3PjnR4sJ3jmVSxYpb7czxRzVg3sozWWE7VuzBEmhq9',
+    orderbook_id: 'FLYqLzWCi68oPBwjC3aBzU3cBjHPe9FdJCTeezWxKYdJ',
+    bids: 'FjbYEqu3cuvRVnREgowMY2RYdDpRo77pgv7u6bJpmPdg',
+    asks: 'BmuAx5LZaAroE9etdi5Xyj11qJTgBUbEZNhYg9HUoxBt',
+    event_queue: 'Aioco2a2jRyBtsdWDvxPFfoaAWEPRsL4P7FA3nSVqq7t',
     tick_size: 100,
-    decimals: 5
+    decimals: 5,
+    pairName: 'SOL-PERP'
   },
   {
-    id: '7vvo8P7kmsLrhjjLiF6are9Hjot4tp3BonZgvavEJtN3',
-    orderbook_id: 'A7xs7UNodcbts5DrEqYymFEZZatdqwANxyReS42kAWYn',
-    bids: 'H2u5Aj6gqEnk7LL6jJrv56CPz5dG1Gm3mVqbgiBGkGC4',
-    asks: '3jT2L3B4SrjR1dBNgDL8N5Fy2XLZR1wJyt52x8YM66hu',
-    event_queue: 'G4vC9X2VMh2ZLFHsgVMNMpT6FYvARfZ8TDd5SECDM4wg',
-    tick_size: 100,
-    decimals: 5
+    id: '39aAiAVqeGHnLJBurJLY3UXo7efF6iEB2fKh2XBF4kmU',
+    orderbook_id: 'Cj95SncCuF7AQpqamUvUdixbzWUMRFoAFNhTG17GU9XQ',
+    bids: 'FXgybzb3HKaA4xPGnt91AMGevS2qNCpoUAgHCggotVug',
+    asks: 'HQ7asAjvBop6rxWEwP3bmtxZuGygy7dFaGoRxwFTvaf1',
+    event_queue: 'DDbLB2shbhfPwKPj2qXbYkUBPAfahzYc8g2CFo5NQ7mx',
+    tick_size: 10000,
+    decimals: 5,
+    pairName: 'BTC-PERP'
   }
 ]
 

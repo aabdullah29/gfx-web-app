@@ -291,7 +291,7 @@ export const createAAMarket = async (wallet: any, connection: Connection, caller
   instructions.push(
     await dexProgram.instruction.createMarket(
       {
-        minBaseOrderSize: new anchor.BN(1000),
+        minBaseOrderSize: new anchor.BN(10),
         tickSize: new anchor.BN(1)
       },
       {
@@ -383,7 +383,7 @@ export const adminCreateMP = async (
     name: Buffer.from('BTC-PERP'),
     tickSize: new Fractional({
       m: new anchor.BN(100),
-      exp: new anchor.BN(4)
+      exp: new anchor.BN(6)
     }),
     baseDecimals: new anchor.BN(7),
     priceOffset: new Fractional({

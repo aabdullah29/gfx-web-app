@@ -8,6 +8,9 @@ import tw, { styled } from 'twin.macro'
 import { checkMobile } from '../../utils'
 import 'styled-components/macro'
 import useBlacklisted from '../../utils/useBlacklisted'
+import { useTraderConfig } from '../../context/trader_risk_group'
+import { findProduct } from './perps/utils'
+import { MPs } from './perps/perpsConstants'
 
 const SELECTED_PAIR_CTN = styled.div`
   ${tw`h-10 w-[180px] rounded-[36px] cursor-pointer p-0.5`}
@@ -148,6 +151,7 @@ const MostPopularCrypto: FC<{ pair: string; type: MarketType }> = ({ pair, type 
 
 const SelectCryptoModal: FC<{ setShowModal: (arg: boolean) => void }> = ({ setShowModal }) => {
   const { selectedCrypto, setSelectedCrypto, pairs, getAskSymbolFromPair, filteredSearchPairs } = useCrypto()
+  const { setActiveProduct } = useTraderConfig()
   const symbol = useMemo(
     () => getAskSymbolFromPair(selectedCrypto.pair),
     [getAskSymbolFromPair, selectedCrypto.pair]
@@ -159,6 +163,11 @@ const SelectCryptoModal: FC<{ setShowModal: (arg: boolean) => void }> = ({ setSh
       setShowModal(false)
       history.push('/synths')
     } else if (selectedCrypto.pair !== symbol) {
+      if (selectedCrypto.type === 'perps') {
+        const product = findProduct(selectedCrypto.marketAddress, MPs)
+        //product && setActiveProduct(product)
+      }
+
       setSelectedCrypto(item)
       setShowModal(false)
     }

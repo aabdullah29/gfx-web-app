@@ -140,7 +140,8 @@ interface IPerpsInfo {
   cancelOrder: (orderId: string) => Promise<DepositIx | void>
   depositFunds: (amount: Fractional) => Promise<DepositIx | void>
   withdrawFunds: (amount: Fractional) => Promise<DepositIx | void>
-  activeProduct: any
+  activeProduct: IActiveProduct
+  setActiveProduct: Dispatch<SetStateAction<IActiveProduct>>
   order: IOrder
   setOrder: Dispatch<SetStateAction<IOrder>>
   setFocused: Dispatch<SetStateAction<OrderInput>>
@@ -157,6 +158,7 @@ export interface IActiveProduct {
   event_queue: string
   tick_size: number
   decimals: number
+  pairName: string
 }
 export interface ITraderHistory {
   price: string
@@ -181,6 +183,7 @@ export function useTraderConfig() {
     depositFunds,
     withdrawFunds,
     activeProduct,
+    setActiveProduct,
     order,
     setOrder,
     setFocused,
@@ -199,6 +202,7 @@ export function useTraderConfig() {
     depositFunds,
     withdrawFunds,
     activeProduct,
+    setActiveProduct,
     order,
     setOrder,
     setFocused,
@@ -219,7 +223,7 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }>({ mpg: null, trg: null })
   const [marginAvail, setMarginAvail] = useState<string>('0')
   const [pnl, setPnl] = useState<string>('0')
-  const [activeProduct, setActiveProduct] = useState<IActiveProduct>(MPs[0])
+  const [activeProduct, setActiveProduct] = useState<IActiveProduct>(MPs[1])
   const [focused, setFocused] = useState<OrderInput>(undefined)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState<boolean>(false)
@@ -507,7 +511,7 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     setMPG(new PublicKey(MPG_ID))
-    setActiveProduct(MPs[0])
+    setActiveProduct(MPs[1])
     setCollateralPrice()
     getFundingRate()
   }, [])
@@ -863,6 +867,7 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
         depositFunds: depositFunds,
         withdrawFunds: withdrawFunds,
         activeProduct: activeProduct,
+        setActiveProduct: setActiveProduct,
         order: order,
         setOrder: setOrder,
         setFocused: setFocused,

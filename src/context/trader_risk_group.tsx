@@ -491,13 +491,13 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, [isSpot, wallet.connected, wallet.publicKey])
 
   const testing = async () => {
-    // const res1 = await adminInitialiseMPG(connection, wallet)
-    // console.log(res1)
-    // const res2 = await adminCreateMarket(connection, wallet)
-    // console.log(res2)
-    // const res3 = await updateFeesIx(wallet, connection, {
-    //   feeModelConfigAcct: marketProductGroup.feeModelConfigurationAcct
-    // })
+    //const mpgKeypair = await adminInitialiseMPG(connection, wallet)
+    //console.log(mpgKeypair)
+    //const res2 = await adminCreateMarket(connection, wallet, mpgKeypair.publicKey.toBase58())
+    //console.log(res2)
+    //const res3 = await updateFeesIx(wallet, connection, {
+    //  feeModelConfigAcct: marketProductGroup.feeModelConfigurationAcct
+    //})
     // console.log(res3)
   }
 

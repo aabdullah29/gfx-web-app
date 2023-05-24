@@ -226,10 +226,11 @@ export const adminInitialiseMPG = async (connection: Connection, wallet: any) =>
     maxTakerFeeBps: 10,
     minTakerFeeBps: 10
   }
-  const response = await initializeMarketProductGroup(accountObj, paramsObject, wallet, connection)
-  return response
+  await initializeMarketProductGroup(accountObj, paramsObject, wallet, connection)
+  return marketProductGroupss
 }
-export const createAAMarket = async (wallet: any, connection: Connection, caller_authority: PublicKey) => {
+export const createAAMarket = async (wallet: any, connection: Connection, caller_authority: PublicKey, 
+  mpgKey: string) => {
   const instructions = []
   const market = anchor.web3.Keypair.generate()
   const eventQueue = anchor.web3.Keypair.generate()
@@ -301,7 +302,7 @@ export const createAAMarket = async (wallet: any, connection: Connection, caller
           bids: bids.publicKey,
           asks: asks.publicKey,
           authority: wallet.publicKey,
-          marketProductGroup: new PublicKey(MPG_ID)
+          marketProductGroup: new PublicKey(mpgKey)
         },
         signers: [eventQueue, market, bids, asks]
       }
@@ -313,7 +314,7 @@ export const createAAMarket = async (wallet: any, connection: Connection, caller
   return market
 }
 
-export const adminCreateMarket = async (connection: Connection, wallet: any) => {
+export const adminCreateMarket = async (connection: Connection, wallet: any, mpg: string) => {
   const [priceOracle, clock] = getPythOracleAndClock(connection)
 
   const instrumentType = 1,
@@ -328,7 +329,7 @@ export const adminCreateMarket = async (connection: Connection, wallet: any) => 
 
   const derivativeMetadata = getDerivativeKey({
     priceOracle: priceOracle,
-    marketProductGroup: new PublicKey(MPG_ID),
+    marketProductGroup: new PublicKey(mpg),
     instrumentType: instrumentType,
     strike: strike,
     fullFundingPeriod: fullFundingPeriod,
@@ -338,7 +339,7 @@ export const adminCreateMarket = async (connection: Connection, wallet: any) => 
   const accountsToSend = {
     priceOracle: priceOracle,
     clock: clock,
-    marketProductGroup: new PublicKey(MPG_ID),
+    marketProductGroup: new PublicKey(mpg),
     payer: wallet.publicKey,
     systemProgram: SystemProgram.programId,
     derivativeMetadata: derivativeMetadata
@@ -360,10 +361,10 @@ export const adminCreateMarket = async (connection: Connection, wallet: any) => 
   const response = await initializeDerivative(accountsToSend, paramsToSend, wallet, connection)
   console.log('init derevative: ', response)
 
-  const res = await createAAMarket(wallet, connection, marketSigner)
+  const res = await createAAMarket(wallet, connection, marketSigner, mpg)
   console.log(res)
 
-  const res2 = await adminCreateMP(connection, wallet, product_key, res.publicKey)
+  const res2 = await adminCreateMP(connection, wallet, product_key, res.publicKey, mpg)
   console.log(res2)
 }
 
@@ -371,11 +372,12 @@ export const adminCreateMP = async (
   connection: Connection,
   wallet: any,
   mpKey: PublicKey,
-  orderbookId: PublicKey
+  orderbookId: PublicKey,
+  mpgKey: string
 ) => {
   const accountObj = {
     authority: wallet.publicKey,
-    marketProductGroup: new PublicKey(MPG_ID),
+    marketProductGroup: new PublicKey(mpgKey),
     product: mpKey,
     orderbook: new PublicKey(orderbookId)
   }

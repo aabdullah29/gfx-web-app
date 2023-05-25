@@ -418,6 +418,7 @@ function createInstructionData() {
 
 export const updateFeesIx = async (wallet: any, connection: Connection, args: any) => {
   const instructions = []
+  const feeAccount = await getFeeConfigAcct(new PublicKey(args.mpg))
 
   const keys = [
     {
@@ -426,12 +427,12 @@ export const updateFeesIx = async (wallet: any, connection: Connection, args: an
       isWritable: false
     },
     {
-      pubkey: args.feeModelConfigAcct,
+      pubkey: feeAccount,
       isSigner: false,
       isWritable: true
     },
     {
-      pubkey: new PublicKey(MPG_ID),
+      pubkey: new PublicKey(args.mpg),
       isSigner: false,
       isWritable: false
     },

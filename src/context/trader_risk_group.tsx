@@ -490,15 +490,19 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   }, [isSpot, wallet.connected, wallet.publicKey])
 
-  const testing = async () => {
-    //const mpgKeypair = await adminInitialiseMPG(connection, wallet)
-    //console.log(mpgKeypair)
-    //const res2 = await adminCreateMarket(connection, wallet, mpgKeypair.publicKey.toBase58())
-    //console.log(res2)
-    //const res3 = await updateFeesIx(wallet, connection, {
-    //  feeModelConfigAcct: marketProductGroup.feeModelConfigurationAcct
-    //})
-    // console.log(res3)
+  const testing = async (newMpg: boolean) => {
+    if (newMpg){
+      const mpgKeypair = await adminInitialiseMPG(connection, wallet)
+      const res2 = await adminCreateMarket(connection, wallet, mpgKeypair.publicKey.toBase58())
+      const res3 = await updateFeesIx(wallet, connection, {
+        mpg: mpgKeypair.publicKey.toBase58()
+      })
+    }
+    else {
+      const mpg = MPG_ID
+      const res2 = await adminCreateMarket(connection, wallet, mpg)
+      console.log(res2)
+    }
   }
 
   const getFundingRate = async () => {
@@ -802,9 +806,14 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, [marketProductGroup])
 
   useEffect(() => {
-    if (marketProductGroup && wallet.connected && !initTesting) {
+    const newMpgNeeded = false
+    if (wallet.connected && !initTesting) {
       setInitTesting(true)
-      testing()
+      testing(newMpgNeeded)
+    }
+    if (marketProductGroup && wallet.connected && !initTesting) {
+      setInitTesting(newMpgNeeded)
+      testing(true)
     }
   }, [marketProductGroup, wallet])
 

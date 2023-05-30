@@ -165,7 +165,7 @@ const SelectCryptoModal: FC<{ setShowModal: (arg: boolean) => void }> = ({ setSh
     } else if (selectedCrypto.pair !== symbol) {
       if (selectedCrypto.type === 'perps') {
         const product = findProduct(selectedCrypto.marketAddress, MPs)
-        //product && setActiveProduct(product)
+        product && setActiveProduct(product)
       }
 
       setSelectedCrypto(item)

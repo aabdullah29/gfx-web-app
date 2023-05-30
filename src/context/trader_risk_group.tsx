@@ -71,6 +71,7 @@ import { DEFAULT_ORDER_BOOK, OrderBook } from './orderbook'
 import { useCrypto } from './crypto'
 import { adminCreateMarket, adminInitialiseMPG, updateFeesIx } from '../pages/TradeV3/perps/adminUtils'
 import { httpClient } from '../api'
+import { printAccounts } from '../pages/TradeV3/constants/market_creation_config'
 
 export const AVAILABLE_ORDERS_PERPS = [
   {
@@ -490,18 +491,21 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   }, [isSpot, wallet.connected, wallet.publicKey])
 
-  const testing = async (newMpg: boolean) => {
-    if (newMpg){
-      const mpgKeypair = await adminInitialiseMPG(connection, wallet)
-      const res2 = await adminCreateMarket(connection, wallet, mpgKeypair.publicKey.toBase58())
-      const res3 = await updateFeesIx(wallet, connection, {
-        mpg: mpgKeypair.publicKey.toBase58()
-      })
-    }
-    else {
-      const mpg = MPG_ID
-      const res2 = await adminCreateMarket(connection, wallet, mpg)
-      console.log(res2)
+  const createDevnetSetup = async (newMpg: boolean) => {
+    try {
+      if (newMpg) {
+        const mpgKeypair = await adminInitialiseMPG(connection, wallet)
+        const res2 = await adminCreateMarket(connection, wallet, mpgKeypair.publicKey.toBase58())
+        const res3 = await updateFeesIx(wallet, connection, {
+          mpg: mpgKeypair.publicKey.toBase58()
+        })
+      } else {
+        const mpg = MPG_ID
+        const res2 = await adminCreateMarket(connection, wallet, mpg)
+        console.log(res2)
+      }
+    } catch (e) {
+      console.log('Error is: ', e)
     }
   }
 
@@ -539,10 +543,13 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const getNewOrderParams = () => {
     let n = '1'
     for (let i = 0; i < activeProduct.decimals; i++) n = n + '0'
+    console.log("input: ", order.size.toString())
     const decimalAdjustedQty = mulFractionals(
       convertToFractional(order.size.toString()),
       new Fractional({ m: new anchor.BN(n), exp: new anchor.BN(0) })
     )
+    console.log("fractional size m: ", decimalAdjustedQty.m.toString())
+    console.log("fractional size exp: ", decimalAdjustedQty.exp.toString())
 
     return {
       maxBaseQty: decimalAdjustedQty,
@@ -792,10 +799,22 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
     [traderRiskGroup, marketProductGroup]
   )
 
+  const printDbData = () => {
+    const trg = currentTRG.toBase58()
+    const rsa = traderRiskGroup.riskStateAccount.toBase58()
+    const fsa = traderRiskGroup.feeStateAccount.toBase58()
+    const obj = {
+      traderRiskGroup: trg,
+      riskStateAccount: rsa,
+      feeStateAccount: fsa
+    }
+    //console.log(obj)
+  }
+
   useEffect(() => {
     if (traderRiskGroup && marketProductGroup) {
       parseTraderInfo()
-      //testing()
+      printDbData()
     }
   }, [traderRiskGroup, marketProductGroup])
 
@@ -808,12 +827,10 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
   useEffect(() => {
     const newMpgNeeded = false
     if (wallet.connected && !initTesting) {
+      if (newMpgNeeded || (!newMpgNeeded && marketProductGroup))
+      //printAccounts(marketProductGroup)
       setInitTesting(true)
-      testing(newMpgNeeded)
-    }
-    if (marketProductGroup && wallet.connected && !initTesting) {
-      setInitTesting(newMpgNeeded)
-      testing(true)
+      //createDevnetSetup(newMpgNeeded)
     }
   }, [marketProductGroup, wallet])
 

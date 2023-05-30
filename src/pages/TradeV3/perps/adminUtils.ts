@@ -21,7 +21,7 @@ import {
   getDexProgram,
   getFeeConfigAcct,
   getMarketSigner,
-  getPythOracleAndClock,
+  getPythClock,
   int64to8
 } from './utils'
 import * as anchor from '@project-serum/anchor'
@@ -36,6 +36,7 @@ import { struct, u8, u32 } from '@solana/buffer-layout'
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import { initializeDerivative } from './instructions/derivativeIx'
 import { Fractional } from './dexterity/types'
+import { market_config_sample } from '../constants/market_creation_config'
 
 export const initializeMarketProductGroup = async (
   initializeProductGroupAccounts: IInitializeMarketProductGroupAccounts,
@@ -292,7 +293,7 @@ export const createAAMarket = async (wallet: any, connection: Connection, caller
   instructions.push(
     await dexProgram.instruction.createMarket(
       {
-        minBaseOrderSize: new anchor.BN(10),
+        minBaseOrderSize: market_config_sample.minBaseOrderSize,
         tickSize: new anchor.BN(1)
       },
       {
@@ -315,20 +316,17 @@ export const createAAMarket = async (wallet: any, connection: Connection, caller
 }
 
 export const adminCreateMarket = async (connection: Connection, wallet: any, mpg: string) => {
-  const [priceOracle, clock] = getPythOracleAndClock(connection)
+  const clock = getPythClock()
 
   const instrumentType = 1,
-    strike = new Fractional({
-      m: new anchor.BN(1),
-      exp: new anchor.BN(0)
-    }),
-    fullFundingPeriod = 3600,
-    minimumFundingPeriod = 600,
+    strike = market_config_sample.strike,
+    fullFundingPeriod = market_config_sample.fullFundingPeriod,
+    minimumFundingPeriod = market_config_sample.minimumFundingPeriod,
     initializationTime = Math.floor(new Date().getTime() / 1000) + 60
   //oracleType = 1
 
   const derivativeMetadata = getDerivativeKey({
-    priceOracle: priceOracle,
+    priceOracle: market_config_sample.oracleAddress,
     marketProductGroup: new PublicKey(mpg),
     instrumentType: instrumentType,
     strike: strike,
@@ -337,7 +335,7 @@ export const adminCreateMarket = async (connection: Connection, wallet: any, mpg
     initializationTime: initializationTime
   })
   const accountsToSend = {
-    priceOracle: priceOracle,
+    priceOracle: market_config_sample.oracleAddress,
     clock: clock,
     marketProductGroup: new PublicKey(mpg),
     payer: wallet.publicKey,
@@ -382,12 +380,9 @@ export const adminCreateMP = async (
     orderbook: new PublicKey(orderbookId)
   }
   const paramObj = {
-    name: Buffer.from('BTC-PERP'),
-    tickSize: new Fractional({
-      m: new anchor.BN(100),
-      exp: new anchor.BN(6)
-    }),
-    baseDecimals: new anchor.BN(7),
+    name: market_config_sample.name,
+    tickSize: market_config_sample.tickSize,
+    baseDecimals: market_config_sample.baseDecimals,
     priceOffset: new Fractional({
       m: new anchor.BN(0),
       exp: new anchor.BN(0)

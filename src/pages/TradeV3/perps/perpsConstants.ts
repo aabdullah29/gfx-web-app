@@ -54,11 +54,11 @@ export const VAULT_MINT = '3Q6dz8cLd4BW1kyuGyUaS7qhTtFP7tGS55Y7fybCUfNy'
 // export const FEE_OUTPUT_REGISTER = '8wca9RPSqBURHo2VU2gDaz5pmnYpj2dXPkS88mVdfoTy'
 // export const RISK_MODEL_CONFIG_ACCT = '9uEGTZRoDwZa4N1asf1p1pnF4HEuUtG2BZBVY26feBDM'
 
-export const MPG_ID = '7UnMVLrax9VoAxmGS9eCENiR64Rbs94geDasGyEtUz4Y'
+export const MPG_ID = '6jT2d44kD7WLtaFBHYWhzQ18MtP9dQD5ewWf9zg5ys4P'
 
-export const RISK_OUTPUT_REGISTER = '7dw8ZyCWPofnviqhj2pVy17QSmNpYPT1HjKcrwnLReSE'
-export const FEE_OUTPUT_REGISTER = '7nC3WLNzjEkyrhqikKc7DprfwXZ6HnporvuKSg7j9SGP'
-export const RISK_MODEL_CONFIG_ACCT = 'C3HkzteagntNhSqUUtQaejRr6fmk744DTYUUQBMCjbjm'
+export const RISK_OUTPUT_REGISTER = 'GJ2cF4hcUky9iGnBRqCJHTJTd8M41o9oUYtkt9aWiBt2'
+export const FEE_OUTPUT_REGISTER = '8mxFcuFQqyP562WurMC438WCxxEPJUSQnt3XwzR4db3x'
+export const RISK_MODEL_CONFIG_ACCT = '7p8TDVpFv23LSLUogoV8AB5ziS64UaC5wyxTAEcShtRi'
 
 export const MPG_ACCOUNT_SIZE = 143864
 export const OUT_REGISTER_SIZE = 432
@@ -105,21 +105,21 @@ export const PERPS_COLLATERAL = [
 
 export const MPs: IActiveProduct[] = [
   {
-    id: 'AG3PjnR4sJ3jmVSxYpb7czxRzVg3sozWWE7VuzBEmhq9',
-    orderbook_id: 'FLYqLzWCi68oPBwjC3aBzU3cBjHPe9FdJCTeezWxKYdJ',
-    bids: 'FjbYEqu3cuvRVnREgowMY2RYdDpRo77pgv7u6bJpmPdg',
-    asks: 'BmuAx5LZaAroE9etdi5Xyj11qJTgBUbEZNhYg9HUoxBt',
-    event_queue: 'Aioco2a2jRyBtsdWDvxPFfoaAWEPRsL4P7FA3nSVqq7t',
+    id: '3VvYzfCvFVZgmDr4CyMPAqigccqLiXk3XCXMUzfk8biV',
+    orderbook_id: '7mV1Vn6YjK2GNbMCYo4vTVd5NuKxGYdgTxVPZhx9xvZz',
+    bids: 'ATM4v6kum8vjMG7TXxepo2nBHunesJQxagQWoyKeWdrR',
+    asks: '8YVrzgBYqeK5sgj2TBGJaA3pLR7sZBHfGVKuVK9mANrr',
+    event_queue: '5T5Y9E8eyP3eddFbwgt4BSEwgaZY7B5pBQ1TqjQ4q9r6',
     tick_size: 100,
     decimals: 5,
     pairName: 'SOL-PERP'
   },
   {
-    id: '39aAiAVqeGHnLJBurJLY3UXo7efF6iEB2fKh2XBF4kmU',
-    orderbook_id: 'Cj95SncCuF7AQpqamUvUdixbzWUMRFoAFNhTG17GU9XQ',
-    bids: 'FXgybzb3HKaA4xPGnt91AMGevS2qNCpoUAgHCggotVug',
-    asks: 'HQ7asAjvBop6rxWEwP3bmtxZuGygy7dFaGoRxwFTvaf1',
-    event_queue: 'DDbLB2shbhfPwKPj2qXbYkUBPAfahzYc8g2CFo5NQ7mx',
+    id: 'H3BZBrf8ne5k6wespy75FGSk71xn2eNrw4rbRaPzveL8',
+    orderbook_id: 'Gtmu3NaEEn5tdBNdFCEd9prfkkki6SNZVxHF9xv2fxCW',
+    bids: 'CCZVX3johg2oJ7E6Qnzd4dBAgJyttEhptbzCXEFpMAbv',
+    asks: '5yrWrTsPUyp2CAi8HHomNhp5KDje7hcDzroSSz4TNscd',
+    event_queue: 'DQNrsQCzr6CmE4iikVW3P6XfkmARqoqsx2LmDbop459k',
     tick_size: 10000,
     decimals: 5,
     pairName: 'BTC-PERP'

@@ -63,14 +63,8 @@ export const getDerivativeKey = (args): anchor.web3.PublicKey => {
   return address
 }
 
-export const getPythOracleAndClock = (connection: Connection): [anchor.web3.PublicKey, anchor.web3.PublicKey] => {
-  return [new PublicKey(PYTH_DEVNET), new PublicKey('SysvarC1ock11111111111111111111111111111111')]
-  if (connection.rpcEndpoint.includes('devnet')) {
-    return [new PublicKey(PYTH_DEVNET), new PublicKey('SysvarC1ock11111111111111111111111111111111')]
-  } else {
-    return [new PublicKey(PYTH_MAINNET), new PublicKey('SysvarC1ock11111111111111111111111111111111')]
-  }
-}
+export const getPythClock = (): anchor.web3.PublicKey =>  new PublicKey('SysvarC1ock11111111111111111111111111111111')
+
 
 export const getMarketSigner = (product_publicKey: PublicKey): anchor.web3.PublicKey => {
   const address = anchor.web3.PublicKey.findProgramAddressSync(

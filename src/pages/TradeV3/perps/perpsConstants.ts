@@ -31,6 +31,8 @@ export const DERIVATIVE_SEED = 'derivative'
 
 export const TRADER_FEE_ACCT_SEED = 'trader_fee_acct'
 
+export const FEE_COLLECTOR = "4bDer2d1P357AhB8YN13b1XXBAh89d2xHex9qrM3xEtt"
+
 export const VALIDATE_ACCOUNT_HEALTH_DISCRIMINANT = new Uint8Array([39, 180, 199, 236, 99, 54, 132, 232])
 export const VALIDATE_ACCOUNT_LIQUIDATION_DISCRIMINANT = new Uint8Array([48, 105, 196, 158, 218, 122, 149, 186])
 export const CREATE_RISK_STATE_ACCOUNT_DISCRIMINANT = new Uint8Array([200, 248, 111, 36, 67, 124, 215, 7])

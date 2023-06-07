@@ -602,7 +602,7 @@ export const PlaceOrder: FC = () => {
   }
 
   const handlePlaceOrder = async () => {
-    if (buttonState !== ButtonState.CanPlaceOrder) {
+    if (buttonState === ButtonState.CanPlaceOrder) {
       setLoading(true)
       setConfirmationModal(true)
       //await newOrder()

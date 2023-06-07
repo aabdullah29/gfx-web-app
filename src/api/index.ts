@@ -23,7 +23,7 @@ const apiClient = (base: string) =>
 
 export const httpClient = (base: string) =>
   axios.create({
-    baseURL: `http://localhost:4000`,
+    baseURL: `https://${base}.goosefx.io`,
     responseType: 'json',
     headers: {
       'Content-Type': 'application/json'

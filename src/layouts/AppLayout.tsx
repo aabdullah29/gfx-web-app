@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { MainNav } from './MainNav'
 import { useRewardToggle, useDarkMode } from '../context'
 import { TermsOfService } from './TermsOfService'
+import { NotifiCard } from '../components/NotifiCard/NotifiCard'
 
 const Wrapper = styled.div<{ $rewardModal: boolean }>`
   ${tw`overflow-x-hidden min-w-vw min-h-vh sm:max-h-vh`}
@@ -18,6 +19,8 @@ export const AppLayout: FC<{ children: ReactNode }> = ({ children }) => {
     <Wrapper $rewardModal={rewardModal} className={mode === 'dark' ? 'dark' : ''}>
       {/*To enable dark mode using tailwind - using dark:classname*/}
       <MainNav />
+      <NotifiCard />
+
       <TermsOfService />
       {children}
     </Wrapper>

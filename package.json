@@ -26,6 +26,7 @@
     "@metaplex-foundation/beet-solana": "0.0.6",
     "@metaplex-foundation/mpl-core": "0.0.2",
     "@metaplex/arweave-cost": "^1.0.4",
+    "@notifi-network/notifi-react-hooks": "^0.73.4",
     "@project-serum/anchor": "^0.17.1-beta.1",
     "@project-serum/borsh": "^0.2.5",
     "@project-serum/sol-wallet-adapter": "^0.2.5",

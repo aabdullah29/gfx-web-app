@@ -136,7 +136,7 @@ export const OrderBookProvider: FC<{ children: ReactNode }> = ({ children }) => 
   const fetchPerpsOrderBook = async () => {
     const res = await httpClient('api-services').post(`${GET_ORDERBOOK}`, {
       API_KEY: 'zxMTJr3MHk7GbFUCmcFyFV4WjiDAufDp',
-      pairName: activeProduct.pairName,
+      pairName: 'SOL-PERP',
       devnet: true
     })
     //console.log('activeProduct.pairName: ', activeProduct.pairName)
@@ -149,7 +149,7 @@ export const OrderBookProvider: FC<{ children: ReactNode }> = ({ children }) => 
   const fetchPerpsOpenOrders = async () => {
     const res = await httpClient('api-services').post(`${GET_OPEN_ORDERS}`, {
       API_KEY: 'zxMTJr3MHk7GbFUCmcFyFV4WjiDAufDp',
-      pairName: activeProduct.pairName,
+      pairName: 'SOL-PERP',
       devnet: true
     })
 

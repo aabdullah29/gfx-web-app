@@ -224,7 +224,7 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }>({ mpg: null, trg: null })
   const [marginAvail, setMarginAvail] = useState<string>('0')
   const [pnl, setPnl] = useState<string>('0')
-  const [activeProduct, setActiveProduct] = useState<IActiveProduct>(MPs[1])
+  const [activeProduct, setActiveProduct] = useState<IActiveProduct>(MPs[0])
   const [focused, setFocused] = useState<OrderInput>(undefined)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState<boolean>(false)
@@ -243,7 +243,7 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [liquidationPrice, setLiquidationPrice] = useState('0')
   const [currentLeverage, setLeverage] = useState<string>('0')
   const [availableLeverage, setAvailLeverage] = useState<string>('0')
-  const [maxQty, setMaxQty] = useState<string>('0.1')
+  const [maxQty, setMaxQty] = useState<string>('5')
   const [onChainPrice, setOnChainPrice] = useState<string>('0')
   const [openInterests, setOpenInterests] = useState<string>('0')
   const [accountHealth, setAccountHealth] = useState<string>('100')
@@ -519,7 +519,7 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     setMPG(new PublicKey(MPG_ID))
-    setActiveProduct(MPs[1])
+    setActiveProduct(MPs[0])
     setCollateralPrice()
     getFundingRate()
   }, [])
@@ -543,13 +543,13 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const getNewOrderParams = () => {
     let n = '1'
     for (let i = 0; i < activeProduct.decimals; i++) n = n + '0'
-    console.log("input: ", order.size.toString())
+    console.log('input: ', order.size.toString())
     const decimalAdjustedQty = mulFractionals(
       convertToFractional(order.size.toString()),
       new Fractional({ m: new anchor.BN(n), exp: new anchor.BN(0) })
     )
-    console.log("fractional size m: ", decimalAdjustedQty.m.toString())
-    console.log("fractional size exp: ", decimalAdjustedQty.exp.toString())
+    console.log('fractional size m: ', decimalAdjustedQty.m.toString())
+    console.log('fractional size exp: ', decimalAdjustedQty.exp.toString())
 
     return {
       maxBaseQty: decimalAdjustedQty,
@@ -825,11 +825,11 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, [marketProductGroup])
 
   useEffect(() => {
-    const newMpgNeeded = false
+    const newMpgNeeded = true
     if (wallet.connected && !initTesting) {
       if (newMpgNeeded || (!newMpgNeeded && marketProductGroup))
-      //printAccounts(marketProductGroup)
-      setInitTesting(true)
+        //printAccounts(marketProductGroup)
+        setInitTesting(true)
       //createDevnetSetup(newMpgNeeded)
     }
   }, [marketProductGroup, wallet])

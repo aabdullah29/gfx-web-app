@@ -31,7 +31,7 @@ export const DERIVATIVE_SEED = 'derivative'
 
 export const TRADER_FEE_ACCT_SEED = 'trader_fee_acct'
 
-export const FEE_COLLECTOR = "4bDer2d1P357AhB8YN13b1XXBAh89d2xHex9qrM3xEtt"
+export const FEE_COLLECTOR = '4bDer2d1P357AhB8YN13b1XXBAh89d2xHex9qrM3xEtt'
 
 export const VALIDATE_ACCOUNT_HEALTH_DISCRIMINANT = new Uint8Array([39, 180, 199, 236, 99, 54, 132, 232])
 export const VALIDATE_ACCOUNT_LIQUIDATION_DISCRIMINANT = new Uint8Array([48, 105, 196, 158, 218, 122, 149, 186])
@@ -56,11 +56,11 @@ export const VAULT_MINT = '3Q6dz8cLd4BW1kyuGyUaS7qhTtFP7tGS55Y7fybCUfNy'
 // export const FEE_OUTPUT_REGISTER = '8wca9RPSqBURHo2VU2gDaz5pmnYpj2dXPkS88mVdfoTy'
 // export const RISK_MODEL_CONFIG_ACCT = '9uEGTZRoDwZa4N1asf1p1pnF4HEuUtG2BZBVY26feBDM'
 
-export const MPG_ID = '6jT2d44kD7WLtaFBHYWhzQ18MtP9dQD5ewWf9zg5ys4P'
+export const MPG_ID = '3iZBZEBFEujRwrCPKbAu5B8rcXsYShBPP1yxEQ3o3ZqD'
 
-export const RISK_OUTPUT_REGISTER = 'GJ2cF4hcUky9iGnBRqCJHTJTd8M41o9oUYtkt9aWiBt2'
-export const FEE_OUTPUT_REGISTER = '8mxFcuFQqyP562WurMC438WCxxEPJUSQnt3XwzR4db3x'
-export const RISK_MODEL_CONFIG_ACCT = '7p8TDVpFv23LSLUogoV8AB5ziS64UaC5wyxTAEcShtRi'
+export const RISK_OUTPUT_REGISTER = 'B6sf4d82VWNLFbX26mzarSARdrD4oia4KxF64QzTQ8yy'
+export const FEE_OUTPUT_REGISTER = '8mnqA44pq4Bn4YoE4jWriKBuE9AiWSjSqFvbWpxmWP5d'
+export const RISK_MODEL_CONFIG_ACCT = 'EcPtvHoCSty9aJnWQsAa7R2yCqgzN8yMpdiGBBQ8X2Qb'
 
 export const MPG_ACCOUNT_SIZE = 143864
 export const OUT_REGISTER_SIZE = 432
@@ -107,25 +107,25 @@ export const PERPS_COLLATERAL = [
 
 export const MPs: IActiveProduct[] = [
   {
-    id: '3VvYzfCvFVZgmDr4CyMPAqigccqLiXk3XCXMUzfk8biV',
-    orderbook_id: '7mV1Vn6YjK2GNbMCYo4vTVd5NuKxGYdgTxVPZhx9xvZz',
-    bids: 'ATM4v6kum8vjMG7TXxepo2nBHunesJQxagQWoyKeWdrR',
-    asks: '8YVrzgBYqeK5sgj2TBGJaA3pLR7sZBHfGVKuVK9mANrr',
-    event_queue: '5T5Y9E8eyP3eddFbwgt4BSEwgaZY7B5pBQ1TqjQ4q9r6',
+    id: 'yjUetjagzUnKaJTTQr7Aynk6mbDtEsthKMKi4csRW9E',
+    orderbook_id: 'UJNeRJcoQHqd63WxgoGxmmsEz1AxNM99hmWMcDAmPsD',
+    bids: 'FbZfPQbgVgCUKHs5fLCjRDZvgpMcgQQJvn4DoFqNap7K',
+    asks: '6HNZFtJ19K5CNPVhqRjmvo6vTUsK9GzfsoEbm2snhdau',
+    event_queue: '7kPnraMGtqKrfZfQnd1hgMFu8DjkDfb3jWVeackkViBb',
     tick_size: 100,
     decimals: 5,
     pairName: 'SOL-PERP'
-  },
-  {
-    id: 'H3BZBrf8ne5k6wespy75FGSk71xn2eNrw4rbRaPzveL8',
-    orderbook_id: 'Gtmu3NaEEn5tdBNdFCEd9prfkkki6SNZVxHF9xv2fxCW',
-    bids: 'CCZVX3johg2oJ7E6Qnzd4dBAgJyttEhptbzCXEFpMAbv',
-    asks: '5yrWrTsPUyp2CAi8HHomNhp5KDje7hcDzroSSz4TNscd',
-    event_queue: 'DQNrsQCzr6CmE4iikVW3P6XfkmARqoqsx2LmDbop459k',
-    tick_size: 10000,
-    decimals: 5,
-    pairName: 'BTC-PERP'
   }
+  // {
+  //   id: 'H3BZBrf8ne5k6wespy75FGSk71xn2eNrw4rbRaPzveL8',
+  //   orderbook_id: 'Gtmu3NaEEn5tdBNdFCEd9prfkkki6SNZVxHF9xv2fxCW',
+  //   bids: 'CCZVX3johg2oJ7E6Qnzd4dBAgJyttEhptbzCXEFpMAbv',
+  //   asks: '5yrWrTsPUyp2CAi8HHomNhp5KDje7hcDzroSSz4TNscd',
+  //   event_queue: 'DQNrsQCzr6CmE4iikVW3P6XfkmARqoqsx2LmDbop459k',
+  //   tick_size: 10000,
+  //   decimals: 5,
+  //   pairName: 'BTC-PERP'
+  // }
 ]
 
 export const PERPS_FEES = [

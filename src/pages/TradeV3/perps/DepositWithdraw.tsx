@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Dispatch, SetStateAction } from 'react'
 import tw, { styled } from 'twin.macro'
 import { Dropdown, Menu } from 'antd'
@@ -134,7 +135,7 @@ export const DepositWithdraw: FC<{
   const { devnetBalances: balances } = useAccounts()
   const { traderInfo } = useTraderConfig()
   const { mode } = useDarkMode()
-  const [amount, setAmount] = useState('5000')
+  const [amount, setAmount] = useState('500')
   const perpTokenList = PERPS_COLLATERAL
   const percentageArr = [25, 50, 75, 100]
   const defualtPerpToken = perpTokenList[0]
@@ -274,7 +275,7 @@ export const DepositWithdraw: FC<{
             <div
               className={percentageIndex === index ? 'percentage-num selected' : 'percentage-num'}
               onClick={(e) => {
-                handlePercentageChange(e, index)
+                //handlePercentageChange(e, index)
               }}
               key={index}
             >
@@ -286,7 +287,8 @@ export const DepositWithdraw: FC<{
       <button
         className={`submit-btn ${checkDisabled() ? 'disabled' : ''}`}
         onClick={handleSubmit}
-        disabled={checkDisabled()}
+        //disabled={checkDisabled()}
+        disabled={false}
       >
         {tradeType === 'deposit' ? 'Deposit' : 'Withdraw'}
       </button>

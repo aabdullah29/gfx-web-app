@@ -828,9 +828,9 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const newMpgNeeded = true
     if (wallet.connected && !initTesting) {
       if (newMpgNeeded || (!newMpgNeeded && marketProductGroup))
-        //printAccounts(marketProductGroup)
-        setInitTesting(true)
-      //createDevnetSetup(newMpgNeeded)
+        //createDevnetSetup(newMpgNeeded)
+        console.log('ending')
+      setInitTesting(true)
     }
   }, [marketProductGroup, wallet])
 

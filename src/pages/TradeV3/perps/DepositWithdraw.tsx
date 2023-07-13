@@ -134,7 +134,7 @@ export const DepositWithdraw: FC<{
   const { devnetBalances: balances } = useAccounts()
   const { traderInfo } = useTraderConfig()
   const { mode } = useDarkMode()
-  const [amount, setAmount] = useState('')
+  const [amount, setAmount] = useState('5000')
   const perpTokenList = PERPS_COLLATERAL
   const percentageArr = [25, 50, 75, 100]
   const defualtPerpToken = perpTokenList[0]
@@ -178,6 +178,7 @@ export const DepositWithdraw: FC<{
       setAmount((Math.floor(result * 1000) / 1000).toString())
     }
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleInputChange = (e) => {
     const t = e.target.value
     if (!isNaN(+t)) {
@@ -264,7 +265,7 @@ export const DepositWithdraw: FC<{
             placeholder="0.00"
             type="text"
             value={amount}
-            onChange={handleInputChange}
+            //onChange={handleInputChange}
           />
           <span className="token">{perpToken.token}</span>
         </INPUT>

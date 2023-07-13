@@ -56,11 +56,11 @@ export const VAULT_MINT = '3Q6dz8cLd4BW1kyuGyUaS7qhTtFP7tGS55Y7fybCUfNy'
 // export const FEE_OUTPUT_REGISTER = '8wca9RPSqBURHo2VU2gDaz5pmnYpj2dXPkS88mVdfoTy'
 // export const RISK_MODEL_CONFIG_ACCT = '9uEGTZRoDwZa4N1asf1p1pnF4HEuUtG2BZBVY26feBDM'
 
-export const MPG_ID = '3iZBZEBFEujRwrCPKbAu5B8rcXsYShBPP1yxEQ3o3ZqD'
+export const MPG_ID = 'BFqj3JFXV92vrBLhmXnLM2Dkkg9VJN6k8NbGoTxxeiUv'
 
-export const RISK_OUTPUT_REGISTER = 'B6sf4d82VWNLFbX26mzarSARdrD4oia4KxF64QzTQ8yy'
-export const FEE_OUTPUT_REGISTER = '8mnqA44pq4Bn4YoE4jWriKBuE9AiWSjSqFvbWpxmWP5d'
-export const RISK_MODEL_CONFIG_ACCT = 'EcPtvHoCSty9aJnWQsAa7R2yCqgzN8yMpdiGBBQ8X2Qb'
+export const RISK_OUTPUT_REGISTER = 'F33aNUpBfFQsqmHJV5g6dHg2wyLRWm3Ew5dX3pgkSTrG'
+export const FEE_OUTPUT_REGISTER = 'jBsyGKxkVVw8h9BtJQzBhB9HMSMmmhb87XdN6EVVLwv'
+export const RISK_MODEL_CONFIG_ACCT = '5QpLKJqN58kKBVZ93hqPQdCba3Lr1dnZ3tMAgAqbvz11'
 
 export const MPG_ACCOUNT_SIZE = 143864
 export const OUT_REGISTER_SIZE = 432
@@ -107,11 +107,11 @@ export const PERPS_COLLATERAL = [
 
 export const MPs: IActiveProduct[] = [
   {
-    id: 'yjUetjagzUnKaJTTQr7Aynk6mbDtEsthKMKi4csRW9E',
-    orderbook_id: 'UJNeRJcoQHqd63WxgoGxmmsEz1AxNM99hmWMcDAmPsD',
-    bids: 'FbZfPQbgVgCUKHs5fLCjRDZvgpMcgQQJvn4DoFqNap7K',
-    asks: '6HNZFtJ19K5CNPVhqRjmvo6vTUsK9GzfsoEbm2snhdau',
-    event_queue: '7kPnraMGtqKrfZfQnd1hgMFu8DjkDfb3jWVeackkViBb',
+    id: 'n3Lx4oVjUN1XAD6GMB9PLLhX9W7TPakdzW461mhF95u',
+    orderbook_id: '3RPexPyzUBQ2iamwr4CfTc37we4dgYNn2CkP4Bn8WbZT',
+    bids: '7HAA7GWvhZCeXe2pheowgMox66Mh2fQQ6S2ZB9yha7cU',
+    asks: '9PeKnBnyBZRK5Ys6PyR4upP2861bU55VGB59wfSUAczS',
+    event_queue: 'HJRax1uuCxs1hDzSyZveZ6eYx5h5UEbypTMrQ1AoWpjo',
     tick_size: 100,
     decimals: 5,
     pairName: 'SOL-PERP'

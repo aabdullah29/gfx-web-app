@@ -5,7 +5,7 @@ import { SingleCollection } from './pages/SingleCollection'
 import { NFTLaunchpadProvider, NFTLPSelectedProvider, USDCToggleProvider } from '../../../context/nft_launchpad'
 import { Whitelist } from './customSC/Whitelist'
 
-export const Launchpad: FC = () => {
+const Launchpad: FC = () => {
   const { path } = useRouteMatch()
 
   return (
@@ -32,3 +32,4 @@ export const Launchpad: FC = () => {
     </Switch>
   )
 }
+export default Launchpad

@@ -14,7 +14,7 @@ const WRAPPER = styled.div`
   ${tw``}
 `
 
-export const ComingSoon = (): ReactElement => {
+const ComingSoon = (): ReactElement => {
   const history = useHistory()
   const { mode } = useDarkMode()
 
@@ -52,3 +52,4 @@ export const ComingSoon = (): ReactElement => {
     </WRAPPER>
   )
 }
+export default ComingSoon

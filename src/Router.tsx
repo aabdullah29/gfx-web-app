@@ -1,7 +1,6 @@
-import React, { FC } from 'react'
+import React, { FC, lazy, Suspense } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import { AppLayout } from './layouts'
-import { Farm, Swap, ComingSoon } from './pages'
 import {
   NavCollapseProvider,
   PriceFeedProvider,
@@ -19,18 +18,21 @@ import {
   OrderProvider
 } from './context'
 import { GenericNotFound } from './pages/InvalidUrl'
-import { CryptoContent } from './pages/TradeV3/TradeContainer'
-import { Launchpad } from './pages/NFTs/launchpad/Launchpad'
-import { Creator } from './pages/NFTs/CreatorPage/Creator'
-import { AdminWrapper } from './pages/NFTs/adminPage/components/AdminWrapper'
-import { AnalyticsWrapper } from './pages/Analytics/AnalyticsWrapper'
 import { TraderProvider } from './context/trader_risk_group'
-
+const Launchpad = lazy(() => import('./pages/NFTs/launchpad/Launchpad'))
+const CryptoContent = lazy(() => import('./pages/TradeV3/TradeContainer'))
+const Creator = lazy(() => import('./pages/NFTs/CreatorPage/Creator'))
+const AdminWrapper = lazy(() => import('./pages/NFTs/adminPage/components/AdminWrapper'))
+const AnalyticsWrapper = lazy(() => import('./pages/Analytics/AnalyticsWrapper'))
+const Farm = lazy(() => import('./pages/Farm/Farm'))
+const Swap = lazy(() => import('./pages/Swap/Swap'))
+const ComingSoon = lazy(() => import('./pages/ComingSoon'))
+const NFTAgg = lazy(() => import('./pages/NFTs/NFTAgg'))
+const TradeAnalyticsWrapper = lazy(() => import('./pages/Analytics/trade/TradeAnalyticsWrapper'))
+const LeaderBoard = lazy(() => import('./pages/Stats/LeaderBoard'))
 // import NFTLandingPageV2 from './pages/NFTs/Home/NFTLandingPageV2'
-import NFTAgg from './pages/NFTs/NFTAgg'
 // import { NFTs } from './pages/NFTs/NFTs'
-import { TradeAnalyticsWrapper } from './pages/Analytics/trade/TradeAnalyticsWrapper'
-import { LeaderBoard } from './pages/Stats/LeaderBoard'
+
 import { StatsProvider } from './context/stats'
 
 export const Router: FC = () => (
@@ -44,67 +46,69 @@ export const Router: FC = () => (
               <NFTAggregatorProvider>
                 <NavCollapseProvider>
                   <AppLayout>
-                    <Switch>
-                      <Route exact path="/swap/:tradePair?">
-                        <Swap />
-                      </Route>
-                      <Route path="/trade">
-                        <PriceFeedProvider>
-                          <OrderProvider>
-                            <TraderProvider>
-                              <OrderBookProvider>
-                                <CryptoContent />
-                              </OrderBookProvider>
-                            </TraderProvider>
-                          </OrderProvider>
-                        </PriceFeedProvider>
-                      </Route>
-                      <Route path="/NFTs/launchpad">
-                        <Launchpad />
-                      </Route>
-                      <Route path="/NFTs/Creator">
-                        <Creator />
-                      </Route>
-                      <Route path="/NFTs/admin">
-                        <NFTAdminProvider>
-                          <AdminWrapper />
-                        </NFTAdminProvider>
-                      </Route>
-                      {/* <Route path="/nfts-v1">
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <Switch>
+                        <Route exact path="/swap/:tradePair?">
+                          <Swap />
+                        </Route>
+                        <Route path="/trade">
+                          <PriceFeedProvider>
+                            <OrderProvider>
+                              <TraderProvider>
+                                <OrderBookProvider>
+                                  <CryptoContent />
+                                </OrderBookProvider>
+                              </TraderProvider>
+                            </OrderProvider>
+                          </PriceFeedProvider>
+                        </Route>
+                        <Route path="/NFTs/launchpad">
+                          <Launchpad />
+                        </Route>
+                        <Route path="/NFTs/Creator">
+                          <Creator />
+                        </Route>
+                        <Route path="/NFTs/admin">
+                          <NFTAdminProvider>
+                            <AdminWrapper />
+                          </NFTAdminProvider>
+                        </Route>
+                        {/* <Route path="/nfts-v1">
                         <NFTProfileProvider>
                           <NFTs />
                         </NFTProfileProvider>
                       </Route> */}
-                      <Route path="/nfts">
-                        <NFTProfileProvider>
-                          <NFTCollectionProvider>
-                            <PriceFeedFarmProvider>
-                              <NFTAgg />
-                            </PriceFeedFarmProvider>
-                          </NFTCollectionProvider>
-                        </NFTProfileProvider>
-                      </Route>
-                      <Route exact path="/farm">
-                        <ComingSoon />
-                      </Route>
-                      <Route exact path="/withdraw">
-                        <Farm />
-                      </Route>
-                      <Route exact path="/analytics">
-                        <AnalyticsWrapper />
-                      </Route>
-                      <Route exact path="/analytics/trade">
-                        <TradeAnalyticsWrapper />
-                      </Route>
-                      <Route exact path="/leaderboard">
-                        <StatsProvider>
-                          <LeaderBoard />
-                        </StatsProvider>
-                      </Route>
-                      <Route>
-                        <GenericNotFound />
-                      </Route>
-                    </Switch>
+                        <Route path="/nfts">
+                          <NFTProfileProvider>
+                            <NFTCollectionProvider>
+                              <PriceFeedFarmProvider>
+                                <NFTAgg />
+                              </PriceFeedFarmProvider>
+                            </NFTCollectionProvider>
+                          </NFTProfileProvider>
+                        </Route>
+                        <Route exact path="/farm">
+                          <ComingSoon />
+                        </Route>
+                        <Route exact path="/withdraw">
+                          <Farm />
+                        </Route>
+                        <Route exact path="/analytics">
+                          <AnalyticsWrapper />
+                        </Route>
+                        <Route exact path="/analytics/trade">
+                          <TradeAnalyticsWrapper />
+                        </Route>
+                        <Route exact path="/leaderboard">
+                          <StatsProvider>
+                            <LeaderBoard />
+                          </StatsProvider>
+                        </Route>
+                        <Route>
+                          <GenericNotFound />
+                        </Route>
+                      </Switch>
+                    </Suspense>
                   </AppLayout>
                 </NavCollapseProvider>
               </NFTAggregatorProvider>

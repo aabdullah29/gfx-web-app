@@ -1,4 +1,13 @@
-import React, { FC, useEffect, useState, useMemo, useCallback, SyntheticEvent, useRef } from 'react'
+import React, {
+  FC,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+  SyntheticEvent,
+  useRef,
+  BaseSyntheticEvent
+} from 'react'
 import { Input, Image } from 'antd'
 import styled from 'styled-components'
 import { TokenInfo } from '@solana/spl-token-registry'
@@ -193,7 +202,9 @@ interface NewTokenInfo extends TokenInfo {
   imageURL?: string
   tokenBalance?: number
 }
-
+export function processImageFallback(e: BaseSyntheticEvent): void {
+  e.target.src = '/images/crypto/Unknown.svg'
+}
 export const Selector: FC<{
   height: string
   balance?: number
@@ -311,7 +322,7 @@ export const Selector: FC<{
             const vol = (b.vol || 0) - (a.vol || 0)
             return symbol || tokenBalance || vol
           })
-          .map(({ address, decimals, name, symbol, imageURL, logoURI, tokenBalance }) => (
+          .map(({ address, decimals, name, symbol, logoURI, tokenBalance }) => (
             <TOKEN
               key={address}
               onClick={async () => {
@@ -323,7 +334,12 @@ export const Selector: FC<{
               }}
             >
               <TOKEN_ICON>
-                <Image draggable={false} preview={false} src={imageURL} fallback={logoURI} alt="token" />
+                <img
+                  src={'/img/crypto/Unknown.svg'}
+                  onError={processImageFallback}
+                  data-src={logoURI}
+                  alt="token"
+                />
               </TOKEN_ICON>
               {checkMobile() ? (
                 <TOKEN_INFO>

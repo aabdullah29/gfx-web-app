@@ -126,7 +126,7 @@ interface Timer {
   seconds: number
 }
 
-export const LeaderBoard: FC = () => {
+const LeaderBoard: FC = () => {
   const [screenType, setScreenType] = useState<number>(1)
   const [howToEarn, setHowToEarn] = useState<boolean>(false)
   const [isLive, setIslive] = useState<boolean>(true)
@@ -355,3 +355,4 @@ export const LeaderBoard: FC = () => {
     </TIMER>
   )
 }
+export default LeaderBoard

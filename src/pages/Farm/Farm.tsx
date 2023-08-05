@@ -37,7 +37,7 @@ const BODY = styled.div`
 //   z-index: 10;
 // `
 
-export const Farm: FC = () => {
+const Farm: FC = () => {
   //eslint-disable-next-line
   const [filter, setFilter] = useState<string>('')
   const { setEndpointName, network } = useConnectionConfig()
@@ -93,3 +93,4 @@ export const Farm: FC = () => {
     </WRAPPER>
   )
 }
+export default Farm

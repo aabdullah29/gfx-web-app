@@ -1254,8 +1254,9 @@ const SwapMainProvider: FC = () => {
   )
 }
 
-export const Swap: FC = () => (
+const Swap: FC = () => (
   <SwapProvider>
     <SwapMainProvider />
   </SwapProvider>
 )
+export default Swap

@@ -1,5 +1,5 @@
 import { useWallet } from '@solana/wallet-adapter-react'
-import React, { ReactElement, useEffect, useMemo, useState } from 'react'
+import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react'
 import { Button } from '../../../components/Button'
 import { useConnectionConfig, useNFTAggregator, useNFTDetails } from '../../../context'
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -35,6 +35,7 @@ import BN from 'bn.js'
 import { LAMPORTS_PER_SOL_NUMBER } from '../../../constants'
 import { successBidRemovedMsg } from './AggModals/AggNotifications'
 import { constructCancelBidInstruction } from '../../../web3/auction-house-sdk/bid'
+import { saveNftTx } from '../../../api/NFTs'
 
 const CancelBidModal = (): ReactElement => {
   const { general, ask, bids, nftMetadata } = useNFTDetails()
@@ -47,6 +48,21 @@ const CancelBidModal = (): ReactElement => {
 
   const [escrowPaymentAccount, setEscrowPaymentAccount] = useState<[PublicKey, number]>()
 
+  const sendNftTransactionLog = useCallback(
+    (txType, signature) => {
+      saveNftTx(
+        'GooseFX',
+        parseFloat(ask?.buyer_price) / LAMPORTS_PER_SOL_NUMBER,
+        general?.mint_address,
+        general?.collection_name,
+        txType,
+        signature,
+        general?.uuid,
+        publicKey.toString()
+      )
+    },
+    [general, ask]
+  )
   const publicKey = useMemo(
     () => wallet?.adapter?.publicKey,
     [wallet?.adapter?.publicKey, wallet?.adapter?.publicKey]
@@ -145,6 +161,7 @@ const CancelBidModal = (): ReactElement => {
       console.log(signature)
       const confirm = await await confirmTransaction(connection, signature, 'processed')
       if (confirm.value.err === null) {
+        sendNftTransactionLog('CANCEL_BID', signature)
         notify(successBidRemovedMsg(signature, nftMetadata, myBidPrice.toFixed(2)))
         setUserEscrowBalance(userEscrowBalance - myBidPrice)
         setIsLoading(false)

@@ -90,6 +90,7 @@ export const ColumnWeb: FC<{ user: User; screenType: number; connectedUser?: boo
     else return 'green'
   }
 
+  console.log(user.totalPoints)
   return (
     <>
       <td>
@@ -117,14 +118,16 @@ export const ColumnWeb: FC<{ user: User; screenType: number; connectedUser?: boo
       <td>
         <div className={getClassNameForLoyalty(user?.loyalty)}>{user?.loyalty && user?.loyalty.toFixed(1)}%</div>
       </td>
+      {screenType !== 2 && (
+        <td>
+          <div>{user?.dailyPoints ?? '0'}</div>
+        </td>
+      )}
       <td>
-        <div>{user?.dailyPoints && '0'}</div>
+        <div>{user?.weeklyPoints ?? '0'}</div>
       </td>
       <td>
-        <div>{user?.weeklyPoints && '0'}</div>
-      </td>
-      <td>
-        <div tw="text-right pr-2.5">{user?.weeklyPoints && '0'}</div>
+        <div tw="text-right pr-2.5">{user?.totalPoints ?? '0'}</div>
       </td>
     </>
   )
@@ -184,7 +187,7 @@ export const ColumnHeadersWeb: FC<{ screenType: number }> = ({ screenType }) => 
           <span tw="font-semibold text-regular text-black-4 dark:text-grey-5">Loyalty</span>
         </Tooltip>
       </th>
-      <th tw="w-1/6">24H points</th>
+      {screenType !== 2 && <th tw="w-1/6">24H points</th>}
       <th>14D points</th>
       <th tw="text-right">Total</th>
     </>

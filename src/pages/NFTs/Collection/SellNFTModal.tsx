@@ -193,13 +193,12 @@ export const SellNFTModal: FC<{
       saveNftTx(
         'GooseFX',
         askPrice,
-        null,
-        wallet?.adapter?.publicKey?.toString(),
         general?.mint_address,
         general?.collection_name,
         txType,
         signature,
-        isModified
+        general?.uuid,
+        wallet?.adapter?.publicKey?.toString()
       )
     },
     [general, ask, askPrice]
@@ -377,7 +376,7 @@ export const SellNFTModal: FC<{
       const signature = await wal.sendTransaction(transaction, connection)
       console.log(signature)
       setPendingTxSig(signature)
-      await attemptConfirmTransaction(signature, 'Delisted', removeAskIX !== undefined, 'confirmed')
+      await attemptConfirmTransaction(signature, 'CANCEL_LIST', removeAskIX !== undefined, 'confirmed')
         .then(() => console.log('TX Confirmed'))
         .catch((err) => console.error(err))
       setDelistLoading(false)
@@ -496,7 +495,7 @@ export const SellNFTModal: FC<{
     try {
       const signature = await wal.sendTransaction(transaction, connection)
       setPendingTxSig(signature)
-      attemptConfirmTransaction(signature, 'Listed', removeAskIX ? true : false)
+      attemptConfirmTransaction(signature, 'LIST', removeAskIX ? true : false)
         .then((res) => console.log('TX Confirmed', res))
         .catch((err) => console.error(err))
     } catch (error) {

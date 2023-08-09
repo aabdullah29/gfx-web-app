@@ -112,9 +112,8 @@ const LOCK_LAYOUT = styled.div<{ $isLocked: boolean }>`
   }
 `
 const DEPOSIT_WRAPPER = styled.div`
-  ${tw`w-[158px] h-10 rounded-[36px] flex items-center justify-center cursor-pointer p-0.5 ml-auto sm:ml-0`}
+  ${tw`w-[158px] h-10 rounded-[36px] flex items-center justify-center cursor-pointer p-0.5 ml-3.75 sm:ml-0`}
   background: linear-gradient(113deg, #f7931a 0%, #dc1fff 132%);
-  margin-left: ${({ $isLocked }) => ($isLocked ? 'auto' : '15px')};
 
   .white-background {
     ${tw`h-full w-full rounded-[36px]`}
@@ -175,6 +174,19 @@ const HEADER = styled.div`
 const WRAPPER = styled.div`
   ${tw`flex items-center justify-center`}
   color: ${({ theme }) => theme.text7};
+`
+
+const TUTORIAL = styled.div`
+  ${tw`w-[100px] h-10 rounded-[36px] flex items-center justify-center cursor-pointer p-0.5 ml-auto sm:ml-0 bg-[#CEB900]`}
+
+  >a {
+    color: white;
+    font-weight: 600;
+  }
+  > a:hover {
+    color: white;
+    font-weight: 600;
+  }
 `
 
 const Loader: FC = () => <Skeleton.Button active size="small" style={{ display: 'flex', height: '12px' }} />
@@ -425,6 +437,17 @@ export const InfoBanner: FC<{
         </div>
       )}
       {!isLocked && <RESET_LAYOUT_BUTTON onClick={() => resetLayout()}>Reset Layout</RESET_LAYOUT_BUTTON>}
+      {isLocked && (
+        <TUTORIAL>
+          <a
+            href="https://docs.goosefx.io/tutorials/perps-paper-trading-tutorial"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Tutorial
+          </a>
+        </TUTORIAL>
+      )}
       {
         <DEPOSIT_WRAPPER $isLocked={isLocked}>
           <div className="white-background">

@@ -28,10 +28,7 @@ const WRAPPER = styled.div<{ $index: number }>`
   ${tw`dark:bg-black-1 bg-grey-5`}
   table {
     ${tw`w-full dark:bg-black-1 px-5 bg-grey-5 border-separate sm:px-[15px]`}
-    border-spacing: 0 20px;
-    @media (max-width: 500px) {
-      border-spacing: 0 15px;
-    }
+    border-spacing: 0 15px;
   }
   .tableHeader {
     th {
@@ -70,7 +67,6 @@ const WRAPPER = styled.div<{ $index: number }>`
   }
   .gradient-3 {
     ${tw`text-green-3`}
-    filter: drop-shadow(0px 0px 5px #80ce00);
   }
   .disable {
     ${tw`cursor-not-allowed`}
@@ -88,7 +84,7 @@ const HEADER = styled.div<{ $mode: string; $isMobile: boolean }>`
 `
 
 export const TABLE_ROW = styled.tr`
-  ${tw`dark:bg-black-2 bg-white h-[50px] font-medium`}
+  ${tw`dark:bg-black-2 bg-white h-[60px] font-medium`}
   td {
     ${tw`text-center dark:text-grey-5 text-black-4 font-semibold text-regular`}
   }
@@ -116,7 +112,7 @@ const BANNER_BTN = styled.div`
 `
 
 const CARD = styled.div`
-  ${tw`h-[90px] w-[32%] dark:bg-black-1 bg-white border border-solid dark:border-grey-2 border-grey-1
+  ${tw`h-[90px] w-[370px] dark:bg-black-1 bg-white border border-solid dark:border-grey-2 border-grey-1
       rounded-small flex flex-row items-center px-3.75 sm:mb-[15px] sm:w-full`}
 `
 interface Timer {
@@ -127,7 +123,8 @@ interface Timer {
 }
 
 export const LeaderBoard: FC = () => {
-  const [screenType, setScreenType] = useState<number>(1)
+  //tochange:
+  const [screenType, setScreenType] = useState<number>(0)
   const [howToEarn, setHowToEarn] = useState<boolean>(false)
   const [isLive, setIslive] = useState<boolean>(true)
   const { users } = useStats()
@@ -185,18 +182,20 @@ export const LeaderBoard: FC = () => {
               <div
                 tw="w-20 h-10 flex justify-center items-center cursor-pointer font-semibold text-regular text-grey-2"
                 key={index}
-                onClick={
-                  screenType === 1
-                    ? () => {
-                        setScreenType(1)
-                      }
-                    : null
-                }
-                // onClick={() => {
-                //   setScreenType(index)
-                // }}
-                className={index !== 1 ? 'disable' : index === screenType ? 'active' : ''}
-                //className={index === screenType ? 'active' : ''}
+                //tochange:
+                // onClick={
+                //   screenType === 1
+                //     ? () => {
+                //         setScreenType(1)
+                //       }
+                //     : null
+                // }
+                onClick={() => {
+                  setScreenType(index)
+                }}
+                //className={index !== 1 ? 'disable' : index === screenType ? 'active' : ''}
+                //tochange:
+                className={index === screenType ? 'active' : ''}
               >
                 {pool}
               </div>
@@ -220,7 +219,7 @@ export const LeaderBoard: FC = () => {
           )}
         </div>
         <div tw="sm:flex sm:flex-row sm:justify-between sm:items-center">
-          <div tw="text-grey-5 font-semibold text-[30px] text-center mt-3 mb-3.75 sm:text-lg">
+          <div tw="text-grey-5 font-semibold text-[30px] text-center mt-3 mb-2 sm:text-lg">
             {screenType === 1 ? (
               <div tw="sm:text-left">Paper Trade {checkMobile() && <br />}Season 1</div>
             ) : (
@@ -250,7 +249,7 @@ export const LeaderBoard: FC = () => {
             the top to win exciting rewards!{' '}
           </div>
           {!checkMobile() && (
-            <div tw="absolute right-5 top-5 dark:text-grey-5 font-semibold text-regular text-black-4">
+            <div tw="absolute right-5 bottom-0 dark:text-grey-5 font-semibold text-regular text-black-4">
               Updates At 12am UTC
             </div>
           )}
@@ -270,12 +269,10 @@ export const LeaderBoard: FC = () => {
         />
         {/* <BANNER_TEXT>Solana Monkey Buisness Gen 3</BANNER_TEXT> */}
         <BANNER_BTN>
-          <a href="https://app.goosefx.io/trade/n3Lx4oVjUN1XAD6GMB9PLLhX9W7TPakdzW461mhF95u/">
-            Trade
-          </a>
+          <a href="https://app.goosefx.io/trade/n3Lx4oVjUN1XAD6GMB9PLLhX9W7TPakdzW461mhF95u/">Trade</a>
         </BANNER_BTN>
       </div>
-      <div tw="flex flex-row justify-between relative px-5 mb-[30px] sm:block sm:px-[15px] sm:mb-0">
+      <div tw="flex flex-row justify-between relative px-5 sm:block sm:px-[15px] sm:mb-0">
         {checkMobile() &&
           users
             ?.filter((user: User) => user.address === wallet?.adapter?.publicKey?.toString())

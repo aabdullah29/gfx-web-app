@@ -48,7 +48,7 @@ const WRAPPER = styled.div<{ $index: number }>`
     ${tw`text-green-3`}
   }
   .yellow {
-    ${tw`text-[#CEB900] `}
+    ${tw`text-[#CEB900]`}
   }
   .orange {
     ${tw`text-[#E36E1A]`}

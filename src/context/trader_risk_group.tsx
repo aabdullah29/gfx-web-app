@@ -281,18 +281,7 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const VAULT_MINT = useMemo(() => (isDevnet ? DEVNET_VAULT_MINT : MAINNET_VAULT_MINT), [isDevnet])
   const connection = useMemo(() => (isDevnet ? devnetConnection : mainnetConnection), [isDevnet])
-  const refreshTraderRiskGroup = async () => {
-    if (wallet.connected) {
-      const trgFetch = currentTRG
-      if (trgFetch) {
-        const trg = await TraderRiskGroup.fetch(connection, trgFetch)
-        trg ? setTraderRiskGroup(trg[0]) : setTraderRiskGroup(null)
-        trg && setRawData((prevState) => ({ ...prevState, trg: trg[1] }))
-      }
-    } else {
-      setDefaults()
-    }
-  }
+
   //
 
   const [userTrg, setUserTrg] = useState<PublicKey>(null)
@@ -316,7 +305,6 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
       const res = await TraderRiskGroup.fetch(connection, userTrg)
       setTraderRiskGroup(res[0])
       setRawTrg(res[1])
-      wasmTrg()
     }
   }, [userTrg])
 
@@ -374,6 +362,10 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
       }
     }
   }, [rawMpg])
+
+  useEffect(() => {
+    wasmTrg()
+  }, [rawTrg, rawMpg])
 
   const wasmTrg = useCallback(async () => {
     const wasm = await import('perps-wasm')
@@ -652,7 +644,6 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
       newOrderParams = getNewOrderParams()
 
     const response = await newOrderIx(newOrderAccounts, newOrderParams, wallet, connection)
-    refreshTraderRiskGroup()
     return response
   }, [traderRiskGroup, order, marketProductGroup])
 
@@ -689,7 +680,6 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
         wallet,
         connection
       )
-      refreshTraderRiskGroup()
       return response
     },
     [traderRiskGroup, order, marketProductGroup]
@@ -738,7 +728,6 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
             limitPrice: convertToFractional(priceToExit.toString())
           }
         const response = await newOrderIx(newOrderAccounts, newOrderParams, wallet, connection)
-        refreshTraderRiskGroup()
         return response
       } else {
         notify({
@@ -777,7 +766,6 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
         wallet,
         connection
       )
-      refreshTraderRiskGroup()
       return response
     },
     [traderRiskGroup, marketProductGroup]
@@ -811,7 +799,6 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
       const response = traderRiskGroup
         ? await depositFundsIx(depositFundsAccounts, { quantity: amount }, wallet, connection)
         : await initTrgDepositIx(depositFundsAccounts, { quantity: amount }, wallet, connection, newTrg, isDevnet)
-      refreshTraderRiskGroup()
       return response
     },
     [traderRiskGroup, marketProductGroup, wallet]
@@ -840,7 +827,6 @@ export const TraderProvider: FC<{ children: ReactNode }> = ({ children }) => {
         connection,
         traderRiskGroup.referral
       )
-      refreshTraderRiskGroup()
       return response
     },
     [traderRiskGroup, marketProductGroup, currentTRG]

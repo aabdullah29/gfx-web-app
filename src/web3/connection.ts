@@ -178,7 +178,7 @@ export const sendPerpsTransaction = async (
     //}
   }
 
-  const signature = await wallet.wallet.adapter.sendTransaction(transaction, connection)
+  const signature = await wallet.wallet.adapter.sendTransaction(transaction, connection, { skipPreflight: true })
   console.log('singature: ', signature)
   if (messages && messages.progressMessage) {
     perpsNotify({

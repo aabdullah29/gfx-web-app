@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Button } from 'antd'
-import React, { useState, FC, useMemo } from 'react'
+import React, { useState, useRef, useEffect, FC, useMemo } from 'react'
 import { useAccounts, useCrypto, useTokenRegistry, useOrderBook, useDarkMode, usePriceFeed } from '../../context'
 import tw, { styled } from 'twin.macro'
 import { useTraderConfig } from '../../context/trader_risk_group'
@@ -379,6 +379,7 @@ export const HistoryPanel: FC = () => {
   const { mode } = useDarkMode()
   const wallet = useWallet()
   const { traderInfo } = useTraderConfig()
+  const perpsEndModalSide = useRef<string>(traderInfo.averagePosition.side)
   const perpsPrice = useMemo(() => getPerpsPrice(orderBook), [orderBook])
   const notionalSize = useMemo(
     () => (Number(traderInfo.averagePosition.quantity) * perpsPrice).toFixed(3),
@@ -421,6 +422,14 @@ export const HistoryPanel: FC = () => {
       return size.toFixed(3)
     } else return 0
   }, [traderInfo.averagePosition, traderInfo.averagePosition.quantity, wallet.connected])
+
+  useEffect(() => {
+    // we do this so that the side value passed to the perps end modal
+    // can never be null and cause unexpected behaviour
+    if (traderInfo.averagePosition.side !== null) {
+      perpsEndModalSide.current = traderInfo.averagePosition.side
+    }
+  }, [traderInfo.averagePosition.side, traderInfo])
 
   return (
     <>
@@ -476,7 +485,7 @@ export const HistoryPanel: FC = () => {
               >
                 <PerpsEndModal
                   profit={summaryData.profit}
-                  side={traderInfo.averagePosition.side === 'buy' ? 'buy' : 'sell'}
+                  side={perpsEndModalSide.current === 'buy' ? 'buy' : 'sell'}
                   entryPrice={summaryData.entryPrice}
                   currentPrice={summaryData.exitPrice}
                   leverage={summaryData.leverage}

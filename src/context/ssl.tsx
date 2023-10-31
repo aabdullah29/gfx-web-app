@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useWallet } from '@solana/wallet-adapter-react'
 import { FC, useState, ReactNode, createContext, useContext, Dispatch, SetStateAction, useEffect } from 'react'
 import { usePriceFeedFarm } from '.'
@@ -44,6 +45,7 @@ export const SSLProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [sslData, setSslData] = useState<SSLToken[]>([])
   const [allPoolSslData, setAllPoolSslData] = useState<SSLToken[]>([])
   const [liquidityAccounts, setLiquidityAccounts] = useState([])
+  const [rewards, setRewards] = useState<[]>([])
   const [filteredLiquidityAccounts, setFilteredLiquidityAccounts] = useState({})
   const [liquidityAmount, setLiquidityAmount] = useState({})
   const [pool, setPool] = useState<Pool>(poolType.all)
@@ -107,7 +109,9 @@ export const SSLProvider: FC<{ children: ReactNode }> = ({ children }) => {
                   ...token,
                   token: farm.token,
                   name: farm.name,
-                  cappedDeposit: farm.cappedDeposit
+                  cappedDeposit: farm.cappedDeposit,
+                  totalLiquidityDeposits: token.totalLiquidityDeposits,
+                  totalAccumulatedLpReward: token.totalAccumulatedLpReward
                 }
                 allPoolentries.push(sslToken)
                 if (token.assetType === pool.index) sslPoolEntries.push(sslToken)
@@ -160,6 +164,7 @@ export const SSLProvider: FC<{ children: ReactNode }> = ({ children }) => {
       try {
         if (liquidityAccounts) {
           const filteredData = {}
+          const filteredRewards = {}
           ADDRESSES[network].forEach((pool: any) => {
             let found = false
             for (let i = 0; i < liquidityAccounts.length; i++) {
@@ -169,7 +174,10 @@ export const SSLProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 found = true
               }
             }
-            if (!found) filteredData[pool.address] = null
+            if (!found) {
+              filteredData[pool.address] = null
+              filteredRewards[pool.address] = null
+            }
           })
           setFilteredLiquidityAccounts(filteredData)
         }
@@ -179,6 +187,36 @@ export const SSLProvider: FC<{ children: ReactNode }> = ({ children }) => {
     })()
   }, [liquidityAccounts])
 
+  function isEmpty(obj) {
+    for (const prop in obj) {
+      if (Object.hasOwn(obj, prop)) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  useEffect(() => {
+    if (filteredLiquidityAccounts && sslData && sslData.length && !isEmpty(filteredLiquidityAccounts)) {
+      const tempRewards = {}
+      for (let i = 0; i < sslData.length; i++) {
+        const mint = sslData[i].mint.toBase58()
+        const liqForMint = filteredLiquidityAccounts[mint]
+        if (!filteredLiquidityAccounts[mint]) {
+          tempRewards[mint] = null
+        } else {
+          const diff = sslData[i].totalAccumulatedLpReward.sub(liqForMint.lastObservedTap)
+          const numerator = diff.mul(liqForMint.amountDeposited)
+          const answer = numerator.div(sslData[i].totalLiquidityDeposits)
+          console.log('answer: ', answer.toString())
+        }
+      }
+      // console.log('found both')
+      // console.log('filteredLiquidityAccounts: ', filteredLiquidityAccounts)
+      // console.log('sslData: ', sslData)
+    } else setRewards([])
+  }, [filteredLiquidityAccounts, sslData])
   //Call API to get ssl table data. Need to run only once
   useEffect(() => {
     getSSLTableData(), getTotalMetrics()

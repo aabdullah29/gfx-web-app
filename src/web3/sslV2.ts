@@ -201,8 +201,8 @@ export const executeWithdraw = async (
     withdrawTX.add(tr)
     let signature
     try {
-      signature = await wallet.sendTransaction(withdrawTX, connection)
-      console.log(signature)
+      signature = await wallet.sendTransaction(withdrawTX, connection, { skipPreflight: true })
+      console.log('withdraw signature: ', signature)
       const confirm = await confirmTransaction(connection, signature, 'confirmed')
       return { confirm, signature }
     } catch (error) {
@@ -213,9 +213,10 @@ export const executeWithdraw = async (
     withdrawTX.add(withdrawIX)
     let signature
     try {
-      signature = await wallet.sendTransaction(withdrawTX, connection)
+      signature = await wallet.sendTransaction(withdrawTX, connection, { skipPreflight: true })
       console.log(signature)
       const confirm = await confirmTransaction(connection, signature, 'confirmed')
+      console.log('withdraw signature: ', signature)
       return { confirm, signature }
     } catch (error) {
       console.log(error, 'withdraw error\n', signature)

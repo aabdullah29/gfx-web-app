@@ -357,7 +357,7 @@ export const SellNFTModal: FC<{
       if (ask && removeAskIX) {
         transaction.add(removeAskIX)
       }
-      const signature = await wal.sendTransaction(transaction, connection)
+      const signature = await wal.sendTransaction(transaction, connection, { skipPreflight: true })
       console.log(signature)
       setPendingTxSig(signature)
       await attemptConfirmTransaction(signature, 'CANCEL_LIST', removeAskIX !== undefined, 'confirmed')
@@ -514,7 +514,7 @@ export const SellNFTModal: FC<{
     }
 
     try {
-      const signature = await wal.sendTransaction(transaction, connection)
+      const signature = await wal.sendTransaction(transaction, connection, { skipPreflight: true })
       setPendingTxSig(signature)
       attemptConfirmTransaction(
         signature,

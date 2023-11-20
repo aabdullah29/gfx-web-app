@@ -46,13 +46,47 @@ export const Connect: FC<MenuItemProps> = ({
       integratedTargetId: 'integrated-terminal',
       endpoint: APP_RPC.endpoint,
       enableWalletPassthrough: true,
-      passthroughWalletContextState: context,
       widgetStyle: {
         position: 'bottom-right', // 'bottom-left', 'top-left', 'top-right'
         size: 'sm' // 'sm'
       }
     })
+  }, [])
+  useEffect(() => {
+    if (!window.Jupiter.syncProps) return
+    window.Jupiter.syncProps({ passthroughWalletContextState: context })
   }, [context.connected])
+  useEffect(() => {
+    const id = setInterval(() => {
+      let firstSet = false
+      let mainTerminalSet = false
+      const jup = document.getElementById('jupiter-terminal')
+      const firstChild = jup?.children?.[0] as HTMLElement
+      console.log('SETTING JUP STYLE', firstChild)
+      if (firstChild) {
+        firstSet = true
+        firstChild.style.borderRadius = '100%'
+        if (mode == 'dark') {
+          firstChild.style.border = '2px solid whitesmoke'
+          firstChild.style.outline = 'none'
+        } else {
+          firstChild.style.border = '2px solid #eee'
+          firstChild.style.outline = '2px solid black'
+        }
+      }
+      const mainTerminal = document.getElementById('integrated-terminal')
+      if (mainTerminal) {
+        mainTerminalSet = true
+        if (mode == 'dark') {
+          mainTerminal.style.border = '2px solid #b5b5b5'
+        } else {
+          mainTerminal.style.border = '2px solid #131313'
+        }
+      }
+      if (firstSet && mainTerminalSet) clearInterval(id)
+    }, 100)
+    return () => clearInterval(id)
+  }, [mode, context.connected, window.Jupiter])
 
   const handleMoveOutside = useCallback(() => {
     if (isOpen) {

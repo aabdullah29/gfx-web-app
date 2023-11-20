@@ -10,7 +10,7 @@ import { SolanaMobileWalletAdapterWalletName } from '@solana-mobile/wallet-adapt
 import { useConnectionConfig } from '../context'
 import { Menu, Transition } from '@headlessui/react'
 import 'styled-components/macro'
-import { useDarkMode, useWalletModal } from '../context'
+import { APP_RPC, useDarkMode, useWalletModal } from '../context'
 import useMoveOutside from '../hooks/useMoveOutside'
 import { useLocation } from 'react-router-dom'
 import { GenericTooltip } from '../utils/GenericDegsin'
@@ -40,6 +40,19 @@ export const Connect: FC<MenuItemProps> = ({
     () => !blacklisted || pathname === '/nfts' || (blacklisted && pathname === '/farm/temp-withdraw'),
     [blacklisted, pathname]
   )
+  useEffect(() => {
+    window.Jupiter.init({
+      displayMode: 'widget',
+      integratedTargetId: 'integrated-terminal',
+      endpoint: APP_RPC.endpoint,
+      enableWalletPassthrough: true,
+      passthroughWalletContextState: context,
+      widgetStyle: {
+        position: 'bottom-right', // 'bottom-left', 'top-left', 'top-right'
+        size: 'sm' // 'sm'
+      }
+    })
+  }, [context.connected])
 
   const handleMoveOutside = useCallback(() => {
     if (isOpen) {

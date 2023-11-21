@@ -52,17 +52,19 @@ export const Connect: FC<MenuItemProps> = ({
       }
     })
   }, [])
+
   useEffect(() => {
     if (!window.Jupiter.syncProps) return
     window.Jupiter.syncProps({ passthroughWalletContextState: context })
   }, [context.connected])
+
   useEffect(() => {
     const id = setInterval(() => {
       let firstSet = false
       let mainTerminalSet = false
       const jup = document.getElementById('jupiter-terminal')
+      jup.className = 'w-full'
       const firstChild = jup?.children?.[0] as HTMLElement
-      console.log('SETTING JUP STYLE', firstChild)
       if (firstChild) {
         firstSet = true
         firstChild.style.borderRadius = '100%'

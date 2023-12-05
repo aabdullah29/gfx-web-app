@@ -84,6 +84,8 @@ const REWARD_REDIRECT = styled.div<{ $index: number }>`
     switch ($index) {
       case 0:
         return theme.bgEarn
+      case 2:
+        return theme.bgWin
       case 1:
         return theme.bgRefer
     }
@@ -91,7 +93,7 @@ const REWARD_REDIRECT = styled.div<{ $index: number }>`
 `
 
 const Wrapper = styled.div`
-  ${tw`h-full min-md:min-h-[500px] w-full flex flex-row sm:flex-col-reverse rounded-t-bigger`}
+  ${tw`h-full min-md:min-h-[520px] w-full flex flex-row sm:flex-col-reverse rounded-t-bigger`}
   font-family: Montserrat !important;
   background-color: ${({ theme }) => theme.bg9};
 `

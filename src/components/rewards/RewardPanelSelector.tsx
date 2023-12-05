@@ -29,16 +29,16 @@ const PanelSelector: FC<PanelSelectorProps> = ({ panelIndex, setPanelIndex }) =>
     [panelIndex]
   )
   return (
-    <div css={tw`flex flex-row justify-center w-full items-center relative text-lg z-[0] min-md:mt-0`}>
+    <div css={tw`flex flex-row w-full items-center relative text-lg z-[0] min-md:mt-0`}>
       <div
         ref={sliderRef}
-        css={tw`bg-white w-full min-md:bg-blue-1 h-[40px]  rounded-[36px] z-[-1] absolute transition-all`}
+        css={tw`bg-white w-full bg-gradient-1 h-[40px]  rounded-[36px] z-[-1] absolute transition-all`}
       />
       <button
         css={[
-          tw` min-w-max  cursor-pointer w-[120px] text-center border-none border-0
+          tw` min-w-max  cursor-pointer w-[100px] text-center border-none border-0
   font-semibold text-base h-[40px] rounded-[36px] duration-700 bg-transparent`,
-          panelIndex == 0 ? tw`text-blue-1 min-md:text-white` : tw`text-grey-5 min-md:text-grey-1`
+          panelIndex == 0 ? tw`text-white` : tw`text-grey-5 min-md:text-grey-1`
         ]}
         ref={setRef}
         data-index={0}
@@ -48,9 +48,9 @@ const PanelSelector: FC<PanelSelectorProps> = ({ panelIndex, setPanelIndex }) =>
       </button>
       <button
         css={[
-          tw`min-w-max cursor-pointer w-[120px] text-center border-none border-0
+          tw`min-w-max cursor-pointer w-[100px] text-center border-none border-0
               font-semibold text-base h-[40px] rounded-[36px] duration-700 bg-transparent`,
-          panelIndex == 1 ? tw`text-blue-1 min-md:text-white` : tw`text-grey-2 min-md:text-grey-1`
+          panelIndex == 1 ? tw`text-white` : tw`text-grey-2 min-md:text-grey-1`
         ]}
         ref={setRef}
         data-index={1}
@@ -58,6 +58,18 @@ const PanelSelector: FC<PanelSelectorProps> = ({ panelIndex, setPanelIndex }) =>
         disabled={true}
       >
         Refer
+      </button>
+      <button
+        css={[
+          tw`min-w-max cursor-pointer w-[100px] text-center border-none border-0
+              font-semibold text-base h-[40px] rounded-[36px] duration-700 bg-transparent`,
+          panelIndex == 2 ? tw`text-white` : tw`text-grey-2 min-md:text-grey-1`
+        ]}
+        ref={setRef}
+        data-index={2}
+        onClick={onChangePanel}
+      >
+        Win
       </button>
     </div>
   )

@@ -6,9 +6,11 @@ import 'styled-components/macro'
 import useBreakPoint from '../../hooks/useBreakPoint'
 import EarnRewards, { RewardsRightPanel } from './Rewards'
 import ReferAndEarn, { ReferFriendSegment, ReferRightPanel } from './Refer'
+import RaffleRightPanel from './RaffleRightPanel'
+import Raffle from './Raffle'
 
 const FLEX_COL_CONTAINER = styled.div`
-  ${tw`flex flex-col py-2.5 min-md:pt-5 px-7.5  h-[275px] min-md:h-full items-center rounded-t-bigger
+  ${tw`flex flex-col py-2.5 min-md:pt-5 px-7.5 h-[275px] min-md:h-full items-center rounded-r-bigger
   `}
 `
 
@@ -21,7 +23,7 @@ const CLOSE_ICON = styled.button`
 interface RewardInfoProps {
   title: string
   subtitle: string
-  icon: ReactNode
+  icon?: ReactNode
   children?: React.ReactNode
   isEarnSelected?: boolean
 }
@@ -31,7 +33,7 @@ const RewardInfo: FC<RewardInfoProps> = ({ title, subtitle, icon, children, isEa
 
   return (
     <>
-      <div id={'title'} css={tw`flex flex-col w-full gap-3.75 min-md:gap-0 min-md:flex-row`}>
+      <div id={'title'} css={tw`flex flex-col w-full gap-3.75 min-md:gap-0 min-md:flex-row w-[580px]`}>
         {(breakpoint.isMobile || breakpoint.isTablet) && !isEarnSelected && <ReferFriendSegment />}
         {!breakpoint.isMobile && <div css={tw`flex`}>{icon}</div>}
         <div css={[tw`flex flex-col gap-3.75 h-full min-md:ml-5 min-md:justify-center`, !subtitle && tw`gap-0`]}>
@@ -54,7 +56,7 @@ const RewardInfo: FC<RewardInfoProps> = ({ title, subtitle, icon, children, isEa
           </p>
         </div>
       </div>
-      <div css={[tw`h-full min-md:max-w-[580px]`]}>{children}</div>
+      <div css={[tw`h-full w-full flex justify-center`]}>{children}</div>
     </>
   )
 }
@@ -107,6 +109,11 @@ export const EarnLeftSidePanel: FC<RewardSegmentProps> = ({ panelIndex, children
         subtitle: '',
         icon: <img style={{ maxWidth: 'none' }} src={`/img/assets/referral-${mode}.svg`} />,
         children: <ReferAndEarn />
+      },
+      {
+        title: '',
+        subtitle: '',
+        children: <Raffle />
       }
     ],
     [mode]
@@ -117,16 +124,17 @@ export const EarnLeftSidePanel: FC<RewardSegmentProps> = ({ panelIndex, children
     }
     return panels[panelIndex]
   }, [panels, panelIndex])
+
   return (
     <div
       css={[
-        tw`flex flex-col px-[30px] min-md:px-[145px] py-7 min-md:pt-5 h-full items-center 
+        tw`flex flex-col px-[30px] py-3.75 min-md:pt-5 h-full w-[100%] items-center 
         font-semibold bg-white dark:bg-black-2 min-h-[461px] min-md:min-h-0`,
         panelIndex == 1 ? tw`min-md:pb-[41px]` : tw`min-md:pb-0`
       ]}
     >
       {!breakpoint.isMobile && children}
-      <div css={tw`flex flex-col w-full max-w-[580px] gap-3.75 min-md:gap-0 h-full items-center`}>
+      <div css={tw`flex flex-col w-full gap-3.75 min-md:gap-0 h-full items-center justify-center`}>
         <RewardInfo isEarnSelected={panelIndex == 0} {...panel} />
       </div>
     </div>
@@ -167,7 +175,8 @@ export const EarnRightSidePanel: FC<RewardSegmentProps> = ({ panelIndex, childre
     switch (panelIndex) {
       case 1:
         return <ReferRightPanel />
-        break
+      case 2:
+        return <RaffleRightPanel />
       case 0:
       default:
         return <RewardsRightPanel />

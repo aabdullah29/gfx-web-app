@@ -36,7 +36,7 @@ function useSolSub(connection: Connection): {
   const subs = useRef<Map<string, Unsubs>>(new Map())
   const on = useCallback(
     async (sub: SolsSubs) => {
-      console.log('ON SUB', sub)
+      // console.log('ON SUB', sub)
       if (subs.current.has(sub.id)) {
         await connection[`remove${sub.SubType}Listener`](subs.current.get(sub.id).id)
       }
@@ -84,7 +84,6 @@ function useSolSub(connection: Connection): {
   )
   const off = useCallback(
     async (id?: string) => {
-      console.log('OFF SUBS', subs.current)
       if (subs.current.size === 0) return
       if (id && subs.current.has(id)) {
         await removeListener(subs.current.get(id))

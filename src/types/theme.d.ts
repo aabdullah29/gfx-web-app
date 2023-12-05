@@ -101,6 +101,7 @@ export interface Colors {
   infoDivBackground: Color
   bgEarn: Color
   bgRefer: Color
+  bgWin: Color
   substractImg: Color
   tokenBorder: Color
   grey1: Color

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useWallet } from '@solana/wallet-adapter-react'
 import React, { useEffect, useMemo, useState } from 'react'
 import 'styled-components/macro'
@@ -58,8 +59,13 @@ function Raffle(): JSX.Element {
           </div>
         </CombinedRewardsTopLinks>
 
-        {!publicKey && <RaffleForWalletNotConnected />}
-        {noPrizesSoFar ? <NoPrizesSoFar /> : <MyRecentWinnings myRecentWinnings={myRecentWinnings} />}
+        {!publicKey ? (
+          <RaffleForWalletNotConnected />
+        ) : noPrizesSoFar ? (
+          <NoPrizesSoFar />
+        ) : (
+          <MyRecentWinnings myRecentWinnings={myRecentWinnings} />
+        )}
       </RewardsLeftLayout>
       <RewardsRightLayout cssStyles={[tw`bg-gradient-to-r to-blue-gradient-1 from-primary-gradient-2 `]}>
         <RaffleRightPanel />

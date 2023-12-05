@@ -6,8 +6,8 @@ export interface RaffleContest {
   contestEndTimestamp: number
   contestClaimPrizeEnabled: boolean
   contestRafflePointsWeights: ContestRafflePointsWeights
-  contestPrizes: ContestPrizes
-  contestWinners: ContestWinner[]
+  contestPrizes: IContestPrizes
+  contestWinners?: ContestWinner[]
 }
 
 interface ContestRafflePointsWeights {
@@ -15,12 +15,12 @@ interface ContestRafflePointsWeights {
   contestPointsWeight: string
 }
 
-interface ContestPrizes {
-  fixedPrizes: FixedPrizes
-  rafflePrizes: RafflePrizes
+interface IContestPrizes {
+  fixedPrizes: IFixedPrizes
+  rafflePrizes?: RafflePrizes
 }
 
-interface FixedPrizes {
+export interface IFixedPrizes {
   numPrizes: number
   tokenName: string
   tokenMint: string

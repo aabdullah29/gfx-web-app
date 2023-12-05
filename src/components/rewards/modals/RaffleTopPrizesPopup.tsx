@@ -1,10 +1,8 @@
-import React, { FC, ReactElement, useEffect } from 'react'
+import React, { FC, ReactElement } from 'react'
 // import { PopupCustom } from '../../../pages/NFTs/Popup/PopupCustom'
-import useBreakPoint from '../../../hooks/useBreakPoint'
+// import useBreakPoint from '../../../hooks/useBreakPoint'
 // import styled from 'styled-components'
 import tw from 'twin.macro'
-import { getRafflePastPrizes } from '../../../api/rewards'
-import { IPastPrizes, RaffleDetails } from '../../../types/raffle_details'
 import Modal from '../../common/Modal'
 import { numberFormatter } from '../../../utils'
 
@@ -35,18 +33,12 @@ import { numberFormatter } from '../../../utils'
 
 const PastTopPrizesPopup: FC<{
   showPastPrize: boolean
+  pastTopPrizes
   setShowPastPrize: () => void
-}> = ({ showPastPrize, setShowPastPrize }): ReactElement => {
-  const breakpoint = useBreakPoint()
-  const [pastPrizes, setPastPrizes] = React.useState<IPastPrizes>()
+}> = ({ pastTopPrizes, showPastPrize, setShowPastPrize }): ReactElement => {
+  // const breakpoint = useBreakPoint()
+  console.log(pastTopPrizes)
 
-  useEffect(() => {
-    ;(async () => {
-      const res = await getRafflePastPrizes()
-      setPastPrizes(res)
-    })()
-  }, [])
-  console.log(breakpoint)
   return (
     <Modal isOpen={showPastPrize} onClose={setShowPastPrize} zIndex={300}>
       <div
@@ -79,18 +71,21 @@ const PastTopPrizesPopup: FC<{
           ]}
           className="hideScrollbar"
         >
-          {pastPrizes?.raffleDetails?.map((raffle: RaffleDetails, index) => (
+          {pastTopPrizes?.map((pastTopPrize, index) => (
             <div key={index}>
-              <p tw="font-semibold text-tiny dark:text-grey-5 text-black-4 p-1 mt-1">{raffle.raffleId}</p>
+              <p tw="font-semibold text-tiny dark:text-grey-5 text-black-4 p-1 mt-1">
+                Raffle #{pastTopPrize.contestId}
+              </p>
               <div>
-                {raffle.prizes.map((prize, index) => (
+                {pastTopPrize.contestPrizes.prizeSplit.map((prize, index) => (
                   <div key={index} tw="flex items-center gap-3.75">
-                    <img src={`/img/crypto/${prize.currency}.svg`} tw="h-[30px] w-[30px]" />
+                    <img src={`/img/crypto/${pastTopPrize.contestPrizes.tokenName}.svg`} tw="h-[30px] w-[30px]" />
                     <div tw=" h-[41px] ">
                       <p tw="text-regular font-semibold">
-                        {numberFormatter(prize.amount)}&nbsp;{prize.currency}
+                        {numberFormatter(Number(pastTopPrize.contestPrizes.totalFixedPrize) / prize, 0)}&nbsp;
+                        {pastTopPrize.contestPrizes.tokenName}
                       </p>
-                      <p>{prize.date}</p>
+                      <p>{'date'}</p>
                     </div>
                     <img
                       css={[tw`w-10 h-10 min-md:w-7.5 min-md:h-7.5 ml-auto cursor-pointer`]}

@@ -25,6 +25,7 @@ import { Loader } from '../../../Loader'
 import CombinedRewardsTopLinks from '../CombinedRewardsTopLinks'
 import HowItWorksButton from '../HowItWorksButton'
 import RewardsLeftLayout from '../../layout/RewardsLeftLayout'
+import TopLinks from '../TopLinks'
 
 export default function RewardsLeftSidePanel({ apy }: { apy: number }): JSX.Element {
   const [userGoFxBalance, setUserGoFxBalance] = useState<TokenAmount>(() => ({
@@ -149,7 +150,7 @@ export default function RewardsLeftSidePanel({ apy }: { apy: number }): JSX.Elem
         setStakeLoading={setIsStakeLoading.set}
       />
       <CombinedRewardsTopLinks>
-        {/*<TopLinks />*/}
+        <TopLinks />
         <HowItWorksButton cssClasses={[tw`ml-auto`]} />
       </CombinedRewardsTopLinks>
       <div css={[tw`flex w-full flex-col max-w-[580px] items-center mt-3 mb-0 min-md:my-7.5`]}>

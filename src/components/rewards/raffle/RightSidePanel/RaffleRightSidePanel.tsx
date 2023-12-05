@@ -7,22 +7,24 @@ import PrizeItem from './RafflePrizeItem'
 import Countdown from './RaffleCountDown'
 import { Button } from '../../../Button'
 import { getRaffleDetails } from '../../../../api/rewards'
-import { RaffleContest } from '../../../../types/raffle_details'
+import { IFixedPrizes, RaffleContest } from '../../../../types/raffle_details'
 import PastTopPrizesPopup from '../../modals/RaffleTopPrizesPopup'
 import useBoolean from '../../../../hooks/useBoolean'
 
 const RaffleRightPanel = (): ReactElement => {
   const [raffleDetails, setRaffleDetails] = useState<RaffleContest>()
+  const [pastTopPrizes, setPastTopPrizes] = useState<IFixedPrizes[]>([])
   const [showPastPrize, setShowPastPrize] = useBoolean(false)
 
   useEffect(() => {
     ;(async () => {
-      const raffle: RaffleContest = await getRaffleDetails()
-      setRaffleDetails(raffle)
+      const raffle = await getRaffleDetails()
+      setRaffleDetails(raffle.data)
+      setPastTopPrizes(raffle.pastTopPrizes)
     })()
   }, [])
-
-  const prizeToken = useMemo(() => raffleDetails?.contestPrizes.fixedPrizes.tokenName, [raffleDetails])
+  const rafflePrize = useMemo(() => raffleDetails?.contestPrizes?.rafflePrizes, [raffleDetails])
+  const fixedPrizes = useMemo(() => raffleDetails?.contestPrizes?.fixedPrizes?.tokenName, [raffleDetails])
 
   const getPriceUtil = useCallback(
     (denominator: number) => {
@@ -55,8 +57,14 @@ const RaffleRightPanel = (): ReactElement => {
 
   const showModals = useMemo(() => {
     if (showPastPrize)
-      return <PastTopPrizesPopup showPastPrize={showPastPrize} setShowPastPrize={setShowPastPrize.off} />
-  }, [showPastPrize])
+      return (
+        <PastTopPrizesPopup
+          pastTopPrizes={pastTopPrizes}
+          showPastPrize={showPastPrize}
+          setShowPastPrize={setShowPastPrize.off}
+        />
+      )
+  }, [showPastPrize, pastTopPrizes])
 
   return (
     <div tw="flex flex-col flex-1  gap-2.5 min-md:gap-7.5">
@@ -64,13 +72,14 @@ const RaffleRightPanel = (): ReactElement => {
       <p tw="text-average font-semibold flex items-center justify-center">{raffleDetails?.contestName}</p>
       <div css={[tw`flex flex-col gap-2.5 min-md:gap-7.5`]}>
         <div tw="flex flex-1 flex-wrap  items-center w-full justify-around ">
-          <PrizeItem position={'first'} prizeAmount={firstPrize} tokenImage={`/img/crypto/${prizeToken}.svg`} />
-          <PrizeItem position={'second'} prizeAmount={secondPrize} tokenImage={`/img/crypto/${prizeToken}.svg`} />
-          <PrizeItem position={'third'} prizeAmount={thirdPrize} tokenImage={`/img/crypto/${prizeToken}.svg`} />
+          <PrizeItem position={'first'} prizeAmount={firstPrize} token={fixedPrizes} />
+          <PrizeItem position={'second'} prizeAmount={secondPrize} token={fixedPrizes} />
+          <PrizeItem position={'third'} prizeAmount={thirdPrize} token={fixedPrizes} />
         </div>
 
         <p tw="hidden min-md:flex text-white font-semibold text-average text-center justify-center">
-          And 20,000 GOFX Distributed to <br /> winners from #4 to #20!
+          And {rafflePrize?.totalRafflePrize?.toLocaleString() + ' '}
+          {rafflePrize?.tokenName} Distributed to <br /> {rafflePrize?.numPrizes} Raffle winners!
         </p>
 
         <p tw="text-white font-semibold text-average flex justify-center">Next Raffle Starts In:</p>

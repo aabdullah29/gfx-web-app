@@ -69,7 +69,7 @@ export const useAnimateButtonSlide = (
   const [localIndex, setLocalIndex] = useState<number>(index ?? 0)
   useEffect(() => {
     if (!slideRef.current || !buttonRefs.current.length) {
-      console.log('Warning: SlideRef or ButtonRefs not set', { slideRef, buttonRefs })
+      // console.log('Warning: SlideRef or ButtonRefs not set', { slideRef, buttonRefs })
       return
     }
     handleSlide(localIndex)
@@ -78,11 +78,11 @@ export const useAnimateButtonSlide = (
   const handleSlide = useCallback(
     (index) => {
       if (!slideRef.current || !buttonRefs.current.length) {
-        console.log('Warning: SlideRef or ButtonRefs not set', { slideRef, buttonRefs })
+        // console.log('Warning: SlideRef or ButtonRefs not set', { slideRef, buttonRefs })
         return
       }
       if (!buttonRefs.current[index]) {
-        console.log('Warning: ButtonRefs not set')
+        // console.log('Warning: ButtonRefs not set')
         return
       }
       setLocalIndex(index)

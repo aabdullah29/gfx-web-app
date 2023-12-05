@@ -30,6 +30,7 @@ const TradeAnalyticsWrapper = lazy(() => import('./pages/Analytics/trade/TradeAn
 const SSLAnalyticsDashboard = lazy(() => import('./pages/Analytics/ssl/SSLAnalyticsDashboard'))
 const LeaderBoard = lazy(() => import('./pages/Stats/LeaderBoard'))
 const Farm = lazy(() => import('./pages/FarmV3/Farm'))
+const Raffle = lazy(() => import('./pages/Raffle/createRaffle'))
 import { TraderProvider } from './context/trader_risk_group'
 import { StatsProvider } from './context/stats'
 import { Alignment, Fit, Layout, useRive } from '@rive-app/react-canvas'
@@ -130,6 +131,9 @@ export const Router: FC = () => (
                             <PriceFeedFarmProvider>
                               <Farm />
                             </PriceFeedFarmProvider>
+                          </Route>
+                          <Route exact path={['/raffle']}>
+                            <Raffle />
                           </Route>
                           <Route exact path="/analytics">
                             <AnalyticsWrapper />

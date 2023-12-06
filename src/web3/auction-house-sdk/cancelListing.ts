@@ -1,6 +1,6 @@
 import { Metaplex, SplTokenCurrency, walletAdapterIdentity } from '@metaplex-foundation/js'
 import { AccountMeta, Connection, PublicKey, TransactionInstruction } from '@solana/web3.js'
-import { AUCTION_HOUSE, OLD_AUCTION_HOUSE, TEMP_AUCTION_HOUSE_AUTHORITY, TREASURY_MINT } from '../ids'
+import { AUCTION_HOUSE, OLD_AUCTION_HOUSE, OLD_AUCTION_HOUSE_AUTHORITY, TREASURY_MINT } from '../ids'
 import { WalletContextState } from '@solana/wallet-adapter-react'
 import { INFTAsk, ISingleNFT } from '../../types/nft_details'
 import { CancelInstructionAccounts, createCancelInstruction } from '@metaplex-foundation/mpl-auction-house'
@@ -87,7 +87,7 @@ export const createRemoveAskIX = async (
     wallet: wallet?.wallet?.adapter?.publicKey,
     tokenAccount: new PublicKey(general.token_account),
     tokenMint: new PublicKey(general.mint_address),
-    authority: new PublicKey(TEMP_AUCTION_HOUSE_AUTHORITY),
+    authority: new PublicKey(OLD_AUCTION_HOUSE_AUTHORITY),
     auctionHouse: new PublicKey(OLD_AUCTION_HOUSE),
     auctionHouseFeeAccount: new PublicKey('JD8Jfejdfxq7KkRisP465aCrWkXGZ8JYqqPHCn9hz7Kc'),
     tradeState: tradeState[0],

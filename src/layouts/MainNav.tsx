@@ -47,7 +47,7 @@ export const MainNav: FC = () => {
     >
       {rewardModal && (
         <ModalSlide
-          rewardModal={rewardModal}
+          rewardModal={true} // CHANGE
           modalType={MODAL_TYPES.REWARDS}
           rewardToggle={!breakpoint.isMobile && rewardToggle}
         />

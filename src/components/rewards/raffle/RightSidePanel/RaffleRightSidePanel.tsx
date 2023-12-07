@@ -10,11 +10,25 @@ import { getRaffleDetails } from '../../../../api/rewards'
 import { IFixedPrizes, RaffleContest } from '../../../../types/raffle_details'
 import PastTopPrizesPopup from '../../modals/RaffleTopPrizesPopup'
 import useBoolean from '../../../../hooks/useBoolean'
+import RaffleRevealUserPrize from '../../modals/RaffleRevealUserPrize'
+import { useWallet } from '@solana/wallet-adapter-react'
 
-const RaffleRightPanel = (): ReactElement => {
+const RaffleRightPanel: FC<{ userRecentPrizes }> = ({ userRecentPrizes }): ReactElement => {
   const [raffleDetails, setRaffleDetails] = useState<RaffleContest>()
-  const [pastTopPrizes, setPastTopPrizes] = useState<IFixedPrizes[]>([])
+  const [pastTopPrizes, setPastTopPrizes] = useState([])
   const [showPastPrize, setShowPastPrize] = useBoolean(false)
+  const [showRevealModal, setShowRevealModal] = useBoolean(false)
+  const { wallet } = useWallet()
+  const publicKey = useMemo(() => wallet?.adapter?.publicKey, [wallet?.adapter, wallet?.adapter?.publicKey])
+
+  const userWonPrize = useMemo(() => {
+    if (userRecentPrizes?.length === 0 || !userRecentPrizes) return false
+    const contestId = raffleDetails?.contestId
+    if (!raffleDetails?.contestId) return false
+
+    const userPrize = userRecentPrizes.filter((prize) => prize.contestId === contestId)
+    return userPrize.length > 0 ? userPrize[0] : false
+  }, [userRecentPrizes, raffleDetails])
 
   useEffect(() => {
     ;(async () => {
@@ -22,7 +36,7 @@ const RaffleRightPanel = (): ReactElement => {
       setRaffleDetails(raffle.data)
       setPastTopPrizes(raffle.pastTopPrizes)
     })()
-  }, [])
+  }, [publicKey])
   const rafflePrize = useMemo(() => raffleDetails?.contestPrizes?.rafflePrizes, [raffleDetails])
   const fixedPrizes = useMemo(() => raffleDetails?.contestPrizes?.fixedPrizes?.tokenName, [raffleDetails])
 
@@ -45,15 +59,6 @@ const RaffleRightPanel = (): ReactElement => {
   }, [raffleDetails, getPriceUtil])
 
   const { firstPrize, secondPrize, thirdPrize } = getFixedPrizes()
-  const buttonText = useMemo(() => {
-    if (!raffleDetails) return 'Enter Raffle'
-    const raffleStartTime = raffleDetails?.contestStartTimestamp
-    if (raffleStartTime > Date.now() / 1000) return 'Raffle Starts in ${}'
-    // const raffleEndTime = raffleDetails?.contestEndTimestamp;
-    // if (raffleEndTime < Date.now()) return 'Raffle Ended'
-
-    return 'Enter Raffle'
-  }, [raffleDetails])
 
   const showModals = useMemo(() => {
     if (showPastPrize)
@@ -64,34 +69,50 @@ const RaffleRightPanel = (): ReactElement => {
           setShowPastPrize={setShowPastPrize.off}
         />
       )
-  }, [showPastPrize, pastTopPrizes])
+    if (showRevealModal)
+      return (
+        <RaffleRevealUserPrize
+          userPrize={userWonPrize}
+          showRevealPrize={showRevealModal}
+          setShowRevealPrize={setShowRevealModal.off}
+        />
+      )
+  }, [showPastPrize, pastTopPrizes, showRevealModal, userWonPrize])
 
   return (
     <div tw="flex flex-col flex-1  gap-2.5 min-md:gap-7.5">
       {showModals}
-      <p tw="text-average font-semibold flex items-center justify-center">{raffleDetails?.contestName}</p>
-      <div css={[tw`flex flex-col gap-2.5 min-md:gap-7.5`]}>
+      <h6
+        tw="text-average 
+      font-semibold flex items-center justify-center"
+      >
+        {raffleDetails?.contestName}
+      </h6>
+      <div css={[tw`flex flex-col gap-2.5 items-center`]}>
         <div tw="flex flex-1 flex-wrap  items-center w-full justify-around ">
           <PrizeItem position={'first'} prizeAmount={firstPrize} token={fixedPrizes} />
           <PrizeItem position={'second'} prizeAmount={secondPrize} token={fixedPrizes} />
           <PrizeItem position={'third'} prizeAmount={thirdPrize} token={fixedPrizes} />
         </div>
 
-        <p tw="hidden min-md:flex text-white font-semibold text-average text-center justify-center">
+        <p
+          tw="hidden min-md:flex text-white font-semibold text-regular mt-[30px] 
+        font-poppins text-center justify-center"
+        >
           And {rafflePrize?.totalRafflePrize?.toLocaleString() + ' '}
-          {rafflePrize?.tokenName} Distributed to <br /> {rafflePrize?.numPrizes} Raffle winners!
+          {rafflePrize?.tokenName} Distributed to {rafflePrize?.numPrizes} Raffle winners!
         </p>
 
-        <p tw="text-white font-semibold text-average flex justify-center">Next Raffle Starts In:</p>
+        <p tw="text-white font-semibold text-average flex justify-center mt-[30px]">Next Raffle Starts In:</p>
+        <Countdown showRevealModal={setShowRevealModal} endTimeStamp={raffleDetails?.contestEndTimestamp} />
 
-        <Countdown timestamp={raffleDetails?.contestStartTimestamp} />
-        <Button
+        <div
           onClick={setShowPastPrize.on}
-          cssStyle={tw`underline text-white font-semibold text-regular  flex
+          css={tw`underline text-white font-semibold text-regular  flex
         justify-center cursor-pointer`}
         >
           See Past Top Prices
-        </Button>
+        </div>
       </div>
     </div>
   )

@@ -250,3 +250,14 @@ export const getPriceObject = (str: string): string => {
   if (str === 'USDT') return 'USDT/USD'
   return `${str}/USDC`
 }
+
+export const getTokenNameFromMintAddress = (mintAddress: string): string => {
+  switch (mintAddress) {
+    case 'GFX1ZjR2P15tmrSwow6FjyDYcEkoFb4p4gJCpLBjaxHD':
+      return 'GFX'
+    case 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v':
+      return 'USDC'
+    case 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263':
+      return 'BONK'
+  }
+}

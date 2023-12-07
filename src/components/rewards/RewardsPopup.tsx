@@ -88,6 +88,7 @@ export const RewardsPopup: FC = () => {
           </Button>
           {panelIndex == 0 && <Rewards />}
           {panelIndex == 1 && <Raffle />}
+          {/* CHANGE */}
         </div>
       </RewardsProvider>
     </CryptoProvider>

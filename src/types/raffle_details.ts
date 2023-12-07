@@ -10,6 +10,24 @@ export interface RaffleContest {
   contestWinners?: ContestWinner[]
 }
 
+interface IContestResults {
+  contestPoints: number
+  totalPoints: number
+  claimedPrize: boolean
+  signature: string
+  contestRank: number
+  prizeType: 'FIXED' | 'RAFFLE'
+  prizeShare: number
+  prizeAmount: number
+  tokenName: string
+  tokenMint: string
+}
+
+export interface IPrizeWinnings {
+  contestId: number
+  winnings: IContestResults
+}
+
 interface ContestRafflePointsWeights {
   totalPointsWeight: string
   contestPointsWeight: string

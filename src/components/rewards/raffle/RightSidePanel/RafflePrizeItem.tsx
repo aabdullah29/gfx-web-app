@@ -18,10 +18,10 @@ const PrizeItem: FC<PrizeItemProps> = ({ prizeAmount, token, position }) => {
           src={`/img/assets/win_${position}.svg`}
         />
       </div>
-      <div css={[tw`flex min-md:flex-col items-center`]}>
-        <p tw="text-white text-regular font-semibold ">{numberFormatter(prizeAmount)}</p>
+      <div css={[tw`flex font-poppins min-md:flex-col items-center`]}>
+        <div tw="text-white font-poppins text-average font-semibold ">{numberFormatter(prizeAmount)}</div>
         {isMobile || isTablet ? <>&nbsp;</> : null}
-        <p tw="text-white text-regular font-semibold">{token}</p>
+        <h6 tw="text-white text-average font-semibold">{token}</h6>
       </div>
     </div>
   )

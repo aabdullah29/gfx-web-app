@@ -8,7 +8,7 @@ interface IRewardToggleConfig {
 const RewardToggleContext = createContext<IRewardToggleConfig | null>(null)
 export const RewardToggleProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [mode, setMode] = useState<boolean>(false)
-  const [panelIndex, setPanelIndex] = useState<number>(0)
+  const [panelIndex, setPanelIndex] = useState<number>(1)
   const closeModalBox = (val: boolean) => {
     if (val) {
       setMode(val)

@@ -360,7 +360,7 @@ export const RewardsProvider: FC<{ children: ReactNode }> = ({ children }) => {
   //   }
   // }, [stakeRewards, walletContext.publicKey, unstakeableTickets])
   useEffect(() => {
-    console.log(claimable, unstakeableTickets)
+    // console.log(claimable, unstakeableTickets) : TODO REMOVE
     setHasRewards(Number(claimable) > 0 || unstakeableTickets.length > 0)
   }, [claimable, unstakeableTickets])
   useEffect(() => {
@@ -406,7 +406,7 @@ export const RewardsProvider: FC<{ children: ReactNode }> = ({ children }) => {
     if (!walletContext?.publicKey || !stakeRewards) {
       return
     }
-    console.log('fetching-rewards', walletContext?.publicKey?.toBase58())
+    // console.log('fetching-rewards', walletContext?.publicKey?.toBase58())
     updateStakeDetails().catch((err) => {
       console.warn('fetch-all-reward-data-failed', err)
     })

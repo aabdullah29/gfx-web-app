@@ -3,11 +3,11 @@ import { createContext, FC, ReactNode, useContext, useState } from 'react'
 import { useConnectionConfig } from './settings'
 import { reverseLookup, getAllDomains, getFavoriteDomain } from '@bonfida/spl-name-service'
 import { useEffect } from 'react'
-import { httpClient } from '../api'
+import { localhostClient } from '../api'
 import { GET_LEADERBOARD_DATA } from '../pages/TradeV3/perps/perpsConstants'
-import { NFT_API_ENDPOINTS } from '../api/NFTs'
 
 export interface User {
+  contestPoints: number
   id: number
   address: string
   boost: number
@@ -20,36 +20,32 @@ export interface User {
   prevWeekPoints?: string
 }
 
-const StatsContext = createContext<any | null>(null)
+interface IStatsConfig {
+  users: User[]
+  isContestActive: boolean
+}
+
+const StatsContext = createContext<IStatsConfig>(null)
 
 export const StatsProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { connection } = useConnectionConfig()
   const [users, setUsers] = useState<User[]>([])
-  const [nftUsers, setNFTUsers] = useState([])
+  const [isContestActive, setIsContestActive] = useState<boolean>(false)
   // call the nft leaderboard api rank api make
   // set the index and call the leaderboard rank api and finally saveNFTAPi thats all done
   const [toShowFlag, setToShowFlag] = useState<boolean>(false)
 
-  async function getNFTUsers(): Promise<User[]> {
-    try {
-      const res: {
-        data: User[]
-      } = await httpClient('api-services').get(`${NFT_API_ENDPOINTS.NFT_LEADERBOARD_USERS}`)
-      return res.data
-    } catch (e) {
-      return []
-    }
-  }
-  async function getUsers(): Promise<User[]> {
+  async function getUsers(): Promise<any> {
     try {
       const res: {
         data: {
           data: User[]
         }
-      } = await httpClient('api-services').post(`${GET_LEADERBOARD_DATA}`, {
+      } = await localhostClient().post(`${GET_LEADERBOARD_DATA}`, {
         devnet: false
       })
-      return res.data.data
+
+      return res.data
     } catch (e) {
       return []
     }
@@ -57,15 +53,14 @@ export const StatsProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     ;(async () => {
-      const users = await getUsers()
+      const { data: users, isContestActive } = await getUsers()
       setUsers(users)
-      const nftUsers = await getNFTUsers()
-      setNFTUsers(nftUsers)
+      setIsContestActive(isContestActive)
     })()
   }, [])
 
   useEffect(() => {
-    if (users.length && !toShowFlag) {
+    if (users?.length && !toShowFlag) {
       setToShowFlag(true)
       getDomainNameOfUser()
     }
@@ -107,7 +102,7 @@ export const StatsProvider: FC<{ children: ReactNode }> = ({ children }) => {
     <StatsContext.Provider
       value={{
         users,
-        nftUsers
+        isContestActive
       }}
     >
       {children}
@@ -115,7 +110,7 @@ export const StatsProvider: FC<{ children: ReactNode }> = ({ children }) => {
   )
 }
 
-export const useStats = (): any => {
+export const useStats = (): IStatsConfig => {
   const context = useContext(StatsContext)
   if (!context) {
     throw new Error('Missing Stats context')
@@ -123,6 +118,6 @@ export const useStats = (): any => {
 
   return {
     users: context.users,
-    nftUsers: context.nftUsers
+    isContestActive: context.isContestActive
   }
 }

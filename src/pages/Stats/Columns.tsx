@@ -1,4 +1,4 @@
-import { FC, useState, Dispatch, SetStateAction } from 'react'
+import { FC, useState, Dispatch, SetStateAction, ReactElement } from 'react'
 import Slider from 'react-slick'
 import { useDarkMode } from '../../context'
 import { checkMobile, truncateAddressForSixChar } from '../../utils'
@@ -8,7 +8,7 @@ import 'styled-components/macro'
 import { Link } from 'react-router-dom'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { Tooltip } from 'antd'
-import { User } from '../../context/stats'
+import { User, useStats } from '../../context/stats'
 
 const STYLED_POPUP = styled(PopupCustom)`
   .ant-modal-content {
@@ -74,11 +74,8 @@ const STYLED_POPUP = styled(PopupCustom)`
   }
 `
 
-export const ColumnWeb: FC<{ user: User; screenType: number; connectedUser?: boolean }> = ({
-  user,
-  screenType,
-  connectedUser
-}) => {
+export const ColumnWeb: FC<{ user: User; connectedUser?: boolean }> = ({ user, connectedUser }) => {
+  const { isContestActive } = useStats()
   const getClassNameForLoyalty = (loyalty: number): string => {
     if (loyalty <= 50) return 'red'
     else if (loyalty > 50 && loyalty <= 85) return 'yellow'
@@ -104,41 +101,40 @@ export const ColumnWeb: FC<{ user: User; screenType: number; connectedUser?: boo
           )}
         </div>
       </td>
-      {screenType !== 2 && (
+      {
         <td>
           <div className={getClassNameForPnl(user?.pnl)}>{user?.pnl && user?.pnl}%</div>
         </td>
-      )}
+      }
       <td>
         <div className={getClassNameForBoost(user?.boost)}>{user?.boost}x</div>
       </td>
       <td>
-        <div className={getClassNameForLoyalty(user?.loyalty)}>{user?.loyalty && user?.loyalty.toFixed(1)}%</div>
+        <div className={getClassNameForLoyalty(user?.loyalty * 100)}>
+          {user?.loyalty && (user?.loyalty * 100).toFixed(1)}%
+        </div>
       </td>
-      {screenType !== 2 && (
+      {isContestActive ? (
         <td>
-          <div>{user?.dailyPoints ?? '0'}</div>
+          <div>{user?.contestPoints?.toFixed(0) ?? '0'}</div>
         </td>
-      )}
-      <td>
-        <div className={screenType !== 2 ? 'right' : ''}>{user?.weeklyPoints ?? '0'}</div>
-      </td>
-      {screenType === 2 && (
+      ) : (
         <td>
-          <div tw="text-right pr-2.5">{user?.totalPoints ?? '0'}</div>
+          <div>{Number(user?.totalPoints).toFixed(0) ?? '0'}</div>
         </td>
       )}
     </>
   )
 }
 
-export const ColumnHeadersWeb: FC<{ screenType: number }> = ({ screenType }) => {
+export const ColumnHeadersWeb = (): ReactElement => {
   const { mode } = useDarkMode()
+  const { isContestActive } = useStats()
   return (
     <>
       <th tw="text-left">Rank</th>
       <th tw="w-1/5">Wallet</th>
-      {screenType !== 2 && (
+      {
         <th tw="w-[10%]">
           <Tooltip
             color={mode === 'dark' ? '#F7F0FD' : '#3C3C3C'}
@@ -155,7 +151,7 @@ export const ColumnHeadersWeb: FC<{ screenType: number }> = ({ screenType }) => 
             <span tw="font-semibold text-regular text-black-4 dark:text-grey-5 underline">PnL</span>
           </Tooltip>
         </th>
-      )}
+      }
       <th tw="w-[10%]">
         <Tooltip
           color={mode === 'dark' ? '#F7F0FD' : '#3C3C3C'}
@@ -186,9 +182,7 @@ export const ColumnHeadersWeb: FC<{ screenType: number }> = ({ screenType }) => 
           <span tw="font-semibold text-regular text-black-4 dark:text-grey-5 underline">Loyalty</span>
         </Tooltip>
       </th>
-      {screenType !== 2 && <th tw="w-1/6">24H points</th>}
-      <th className={screenType !== 2 ? 'right' : ''}>14D points</th>
-      {screenType === 2 && <th tw="text-right">Total</th>}
+      {isContestActive ? <th tw="w-1/6">Contest points</th> : <th>Total points</th>}
     </>
   )
 }
@@ -200,7 +194,7 @@ export const ColumnMobile: FC<{ user: User }> = ({ user }) => (
     </td>
     <td>{<div>{truncateAddressForSixChar(user?.address)}</div>}</td>
     <td>
-      <div>{user?.weeklyPoints}</div>
+      <div>{user?.contestPoints?.toFixed(2)}</div>
     </td>
   </>
 )
@@ -329,22 +323,10 @@ export const HowToEarn: FC<{
                 width={checkMobile() && '205px'}
               />
               <div className="subText">
-                {screenType === 2 ? (
-                  <div className={mode === 'lite' ? 'space' : ''}>
-                    Purchase NFTs directly on GooseFX to earn points, more closer to the floor, more points you
-                    earn.
-                  </div>
-                ) : (
-                  'Earn points with each trade. The more loyal you are and the higher your PnL%, ' +
-                  'the more points you earn.'
-                )}
+                {'Earn points with each trade. The more loyal you are and the higher your PnL%, ' +
+                  'the more points you earn.'}
               </div>
               <LearnMore screenType={screenType} />
-              {screenType === 2 && (
-                <Link to="/nfts/" target="_blank" rel="noreferrer" tw="block w-1/2 mx-auto my-0 sm:w-full">
-                  <div className="explore">Explore</div>
-                </Link>
-              )}
             </div>
             <div className="slide">
               <div tw="absolute top-[-5px] !text-grey-1 text-regular">
@@ -352,14 +334,14 @@ export const HowToEarn: FC<{
               </div>
               <h2>{screenType !== 2 ? 'Rewards and Eligibility' : 'Loyalty and Boost'} </h2>
               <img
-                src={`/img/assets/Leaderboard/step4_${screenType !== 2 ? 'perps' : 'nfts'}_${mode}.svg`}
+                src={`/img/assets/Leaderboard/step4_perps_${mode}.svg`}
                 alt="step-4-icon"
                 height={checkMobile() && '150px'}
                 width={checkMobile() && '205px'}
               />
               {screenType !== 2 && !checkMobile() && (
                 <img
-                  src={`/img/assets/Leaderboard/step5_${screenType !== 2 ? 'perps' : 'nfts'}_${mode}.svg`}
+                  src={`/img/assets/Leaderboard/step5_perps_${mode}.svg`}
                   alt="step-4-icon"
                   tw="!my-10"
                   height={checkMobile() && '150px'}
@@ -367,15 +349,12 @@ export const HowToEarn: FC<{
                 />
               )}
               <div className="subText">
-                {screenType === 2
-                  ? 'Maintain consistent activity on GooseFX to improve your loyalty score and stay within the top 50' +
-                    'users in 24H awards a daily boost.'
-                  : 'Top 20 traders are eligible to claim rewards every 14 days. Trade your' +
-                    'way to the top for the main reward.'}
+                {'Top 20 traders are eligible to claim rewards every 14 days. Trade your' +
+                  'way to the top for the main reward.'}
               </div>
               <LearnMore screenType={screenType} />
               <Link
-                to={screenType !== 2 ? '/trade/n3Lx4oVjUN1XAD6GMB9PLLhX9W7TPakdzW461mhF95u/' : '/nfts'}
+                to={'/trade/n3Lx4oVjUN1XAD6GMB9PLLhX9W7TPakdzW461mhF95u/'}
                 target="_blank"
                 rel="noreferrer"
                 tw="block w-1/2 mx-auto my-0 sm:w-full"

@@ -46,7 +46,7 @@ export const OrderBookProvider: FC<{ children: ReactNode }> = ({ children }) => 
   const [perpsOpenOrders, setPerpsOpenOrders] = useState([])
   const wallet = useWallet()
   const { activeProduct, marketProductGroup, traderInfo, setOrderBook: setOrderBookCopy } = useTraderConfig()
-
+  // console.log(traderInfo, 'shrihari')
   useEffect(() => {
     const refreshOpenOrders = async () => {
       if (wallet.connected && traderInfo.traderRiskGroupKey) {

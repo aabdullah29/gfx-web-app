@@ -31,6 +31,14 @@ export const httpClient = (base: string) =>
       'Content-Type': 'application/json'
     }
   })
+export const localhostClient = () =>
+  axios.create({
+    baseURL: `http://localhost:4000`,
+    responseType: 'json',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
 
 export const customClient = (customURL: string, collectionId?: number) => {
   const data = JSON.stringify({

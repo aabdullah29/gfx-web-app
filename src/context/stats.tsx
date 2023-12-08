@@ -31,8 +31,6 @@ export const StatsProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { connection } = useConnectionConfig()
   const [users, setUsers] = useState<User[]>([])
   const [isContestActive, setIsContestActive] = useState<boolean>(false)
-  // call the nft leaderboard api rank api make
-  // set the index and call the leaderboard rank api and finally saveNFTAPi thats all done
   const [toShowFlag, setToShowFlag] = useState<boolean>(false)
 
   async function getUsers(): Promise<any> {

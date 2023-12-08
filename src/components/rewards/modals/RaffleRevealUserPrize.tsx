@@ -4,14 +4,13 @@ import tw from 'twin.macro'
 import Modal from '../../common/Modal'
 import useBoolean from '../../../hooks/useBoolean'
 import { IPrizeWinnings } from '../../../types/raffle_details'
-import { numberFormat } from 'highcharts'
 import { numberFormatter } from '../../../utils'
 import { GradientText } from '../../GradientText'
 
 const RaffleRevealUserPrize: FC<{
   showRevealPrize: boolean
   setShowRevealPrize: () => void
-  userPrize: IPrizeWinnings
+  userPrize: number
 }> = ({ showRevealPrize, setShowRevealPrize, userPrize }): ReactElement => {
   // const breakpoint = useBreakPoint()
   const [revealAnimation, setShowRevealAnimation] = useBoolean(true)
@@ -58,7 +57,7 @@ const RevealAnimation = () => (
   </>
 )
 
-const RevealPrize: FC<{ userPrize: IPrizeWinnings }> = ({ userPrize }) => (
+const RevealPrize: FC<{ userPrize: number }> = ({ userPrize }) => (
   <>
     <div
       css={[
@@ -74,12 +73,13 @@ const RevealPrize: FC<{ userPrize: IPrizeWinnings }> = ({ userPrize }) => (
         ]}
       >
         <div tw="flex flex-col justify-center items-center">
-          <img src={`/img/crypto/${userPrize?.winnings?.tokenName}.svg`} tw="h-10 w-10" />
+          {/* CHANGE */}
+          <img src={`/img/crypto/BONK.svg`} tw="h-10 w-10" />
           <div tw="flex flex-col justify-center items-center">
             <p tw="text-regular text-center mt-2 font-semibold">You Won</p>
             <h6>
               <GradientText
-                text={numberFormatter(userPrize?.winnings?.prizeAmount) + ' ' + userPrize?.winnings?.tokenName}
+                text={userPrize ? numberFormatter(userPrize / 100000, 2) + ' BONK' : '0.00'}
                 fontSize={15}
                 fontWeight={800}
               />

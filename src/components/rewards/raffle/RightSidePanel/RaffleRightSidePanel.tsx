@@ -7,11 +7,14 @@ import PrizeItem from './RafflePrizeItem'
 import Countdown from './RaffleCountDown'
 import { Button } from '../../../Button'
 import { getRaffleDetails } from '../../../../api/rewards'
-import { IFixedPrizes, RaffleContest } from '../../../../types/raffle_details'
+import { RaffleContest } from '../../../../types/raffle_details'
 import PastTopPrizesPopup from '../../modals/RaffleTopPrizesPopup'
 import useBoolean from '../../../../hooks/useBoolean'
 import RaffleRevealUserPrize from '../../modals/RaffleRevealUserPrize'
 import { useWallet } from '@solana/wallet-adapter-react'
+import { BONK_MINT_PUBKEY, getClaimProgram, getUserClaimableAmount } from './claimPrize'
+import { useConnectionConfig } from '../../../../context'
+import { useRaffleContext } from '../../../../context/raffle_context'
 
 const RaffleRightPanel: FC<{ userRecentPrizes }> = ({ userRecentPrizes }): ReactElement => {
   const [raffleDetails, setRaffleDetails] = useState<RaffleContest>()
@@ -19,16 +22,12 @@ const RaffleRightPanel: FC<{ userRecentPrizes }> = ({ userRecentPrizes }): React
   const [showPastPrize, setShowPastPrize] = useBoolean(false)
   const [showRevealModal, setShowRevealModal] = useBoolean(false)
   const { wallet } = useWallet()
+
+  const wal = useWallet()
+  const { connection } = useConnectionConfig()
+  const program = getClaimProgram(connection, wal)
   const publicKey = useMemo(() => wallet?.adapter?.publicKey, [wallet?.adapter, wallet?.adapter?.publicKey])
-
-  const userWonPrize = useMemo(() => {
-    if (userRecentPrizes?.length === 0 || !userRecentPrizes) return false
-    const contestId = raffleDetails?.contestId
-    if (!raffleDetails?.contestId) return false
-
-    const userPrize = userRecentPrizes.filter((prize) => prize.contestId === contestId)
-    return userPrize.length > 0 ? userPrize[0] : false
-  }, [userRecentPrizes, raffleDetails])
+  const { prizeClaimable } = useRaffleContext()
 
   useEffect(() => {
     ;(async () => {
@@ -72,12 +71,12 @@ const RaffleRightPanel: FC<{ userRecentPrizes }> = ({ userRecentPrizes }): React
     if (showRevealModal)
       return (
         <RaffleRevealUserPrize
-          userPrize={userWonPrize}
+          userPrize={prizeClaimable}
           showRevealPrize={showRevealModal}
           setShowRevealPrize={setShowRevealModal.off}
         />
       )
-  }, [showPastPrize, pastTopPrizes, showRevealModal, userWonPrize])
+  }, [showPastPrize, pastTopPrizes, showRevealModal, prizeClaimable])
 
   return (
     <div tw="flex flex-col flex-1  gap-2.5 min-md:gap-7.5">
@@ -104,7 +103,14 @@ const RaffleRightPanel: FC<{ userRecentPrizes }> = ({ userRecentPrizes }): React
         </p>
 
         <p tw="text-white font-semibold text-average flex justify-center mt-[30px]">Next Raffle Starts In:</p>
-        <Countdown showRevealModal={setShowRevealModal} endTimeStamp={raffleDetails?.contestEndTimestamp} />
+        {}
+        <Countdown
+          raffleDetails={raffleDetails}
+          prizeClaimable={prizeClaimable}
+          program={program}
+          showRevealModal={setShowRevealModal}
+          endTimeStamp={raffleDetails?.contestEndTimestamp}
+        />
 
         <div
           onClick={setShowPastPrize.on}

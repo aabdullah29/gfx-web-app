@@ -54,9 +54,13 @@ export const getUserClaimableAmount = async (
   }
 }
 
-export const claimPrize = async (program: any, pubKey: PublicKey, mintAddress: PublicKey): Promise<void> => {
+export const claimPrize = async (
+  program: anchor.Program,
+  pubKey: PublicKey,
+  mintAddress: PublicKey
+): Promise<string | boolean> => {
   try {
-    const signature = await program.methods
+    await program.methods
       .claimRewards()
       .accounts({
         user: pubKey,
@@ -69,9 +73,10 @@ export const claimPrize = async (program: any, pubKey: PublicKey, mintAddress: P
         tokenProgram: TOKEN_PROGRAM_ID,
         associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
       })
-      .rpc()
-    console.log(`https://solscan.io/tx/${signature}`)
+      .rpc({ commitment: 'processed' })
+    return true
   } catch (err) {
     console.log(err)
+    return err
   }
 }

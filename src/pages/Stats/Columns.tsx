@@ -81,10 +81,10 @@ export const ColumnWeb: FC<{ user: User; connectedUser?: boolean }> = ({ user, c
     else if (loyalty > 50 && loyalty <= 85) return 'yellow'
     else return 'gradient-3'
   }
-  const getClassNameForPnl = (pnl: number): string => {
-    if (pnl < 0) return 'red'
-    else return 'green'
-  }
+  // const getClassNameForPnl = (pnl: number): string => {
+  //   if (pnl < 0) return 'red'
+  //   else return 'green'
+  // }
   return (
     <>
       <td>
@@ -101,11 +101,7 @@ export const ColumnWeb: FC<{ user: User; connectedUser?: boolean }> = ({ user, c
           )}
         </div>
       </td>
-      {
-        <td>
-          <div className={getClassNameForPnl(user?.pnl)}>{user?.pnl && user?.pnl}%</div>
-        </td>
-      }
+
       <td>
         <div className={getClassNameForBoost(user?.boost)}>{user?.boost}x</div>
       </td>
@@ -133,26 +129,9 @@ export const ColumnHeadersWeb = (): ReactElement => {
   return (
     <>
       <th tw="text-left">Rank</th>
-      <th tw="w-1/5">Wallet</th>
-      {
-        <th tw="w-[10%]">
-          <Tooltip
-            color={mode === 'dark' ? '#F7F0FD' : '#3C3C3C'}
-            title={
-              <span tw="dark:text-black-4 text-grey-5 font-medium text-tiny">
-                Your PnL% reflects your return on investment, calculated using the current market price of your
-                assets and your net deposits.
-              </span>
-            }
-            overlayClassName={mode === 'dark' ? 'dark leaderboard-tooltip' : 'leaderboard-tooltip'}
-            placement="topLeft"
-            overlayInnerStyle={{ borderRadius: '8px' }}
-          >
-            <span tw="font-semibold text-regular text-black-4 dark:text-grey-5 underline">PnL</span>
-          </Tooltip>
-        </th>
-      }
-      <th tw="w-[10%]">
+      <th tw="w-[35%]">Wallet</th>
+
+      <th tw="w-[20%]">
         <Tooltip
           color={mode === 'dark' ? '#F7F0FD' : '#3C3C3C'}
           title={
@@ -167,7 +146,7 @@ export const ColumnHeadersWeb = (): ReactElement => {
           <span tw="font-semibold text-regular text-black-4 dark:text-grey-5 underline">Boost</span>
         </Tooltip>
       </th>
-      <th tw="w-1/6">
+      <th tw="w-[20%]">
         <Tooltip
           color={mode === 'dark' ? '#F7F0FD' : '#3C3C3C'}
           title={
@@ -182,7 +161,7 @@ export const ColumnHeadersWeb = (): ReactElement => {
           <span tw="font-semibold text-regular text-black-4 dark:text-grey-5 underline">Loyalty</span>
         </Tooltip>
       </th>
-      {isContestActive ? <th tw="w-1/6">Contest points</th> : <th>Total points</th>}
+      {isContestActive ? <th tw="w-[20%]">Contest points</th> : <th tw="w-[20%]">Total points</th>}
     </>
   )
 }

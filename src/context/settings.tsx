@@ -37,7 +37,7 @@ export type RPC = {
 export const APP_RPC: RPC = {
   chainId: ENV.MainnetBeta,
   name: 'GooseFX',
-  endpoint: `https://rpc-proxy.goosefx.workers.dev`,
+  endpoint: `https://solemn-shy-liquid.solana-mainnet.quiknode.pro/d3fb108b65f5421127f2cedfed5846fbd7436709/`,
   network: WalletAdapterNetwork.Mainnet
 }
 
